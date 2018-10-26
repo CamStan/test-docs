@@ -4,5 +4,5 @@ Repo for testing changes to various projects' [readthedocs](https://readthedocs.
 
 ### Project Documentation Links
 
-[SCR Test Documentation](https://camstan-test-docs-scr.readthedocs.io/en/latest/)
-[UnifyCR Test Documentation](https://camstan-test-docs-unifycr.readthedocs.io/en/latest/)
+* [SCR Test Documentation](https://camstan-test-docs-scr.readthedocs.io/en/latest/)
+* [UnifyCR Test Documentation](https://camstan-test-docs-unifycr.readthedocs.io/en/latest/)
