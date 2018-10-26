@@ -52,7 +52,7 @@ If you use Dotkit then replace ``spack load`` with ``spack use``.
 Download the latest UnifyCR release from the `Releases
 <https://github.com/LLNL/UnifyCR/releases>`_ page.
 
-**Building the dependencies**
+**Building the Dependencies**
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 UnifyCR requires MPI, LevelDB, and GOTCHA(version 0.0.2).
