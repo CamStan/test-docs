@@ -18,17 +18,13 @@ In this section, we describe how to build UnifyCR with I/O interception.
 How to build UnifyCR
 ---------------------------
 
-Download the latest UnifyCR release from the `Releases
-<https://github.com/LLNL/UnifyCR/releases>`_ page. UnifyCR requires MPI,
-LevelDB, and GOTCHA(version 0.0.2).
+To install all dependencies and set up your build environment, we recommend
+using the `Spack package manager <https://github.com/spack/spack>`_.
 
 **Building with Spack**
 ***************************
 
-To install leveldb and gotcha and set up your build environment, we recommend
-using the `Spack package manager <https://github.com/spack/spack>`_.
-
-The instructions assume that you do not already have a module system installed
+These instructions assume that you do not already have a module system installed
 such as LMod, Dotkit, or Environment Modules. If your system already has Dotkit
 or LMod installed then installing the environment-modules package with spack
 is unnecessary (so you can safely skip that step).
@@ -38,10 +34,41 @@ If you use Dotkit then replace ``spack load`` with ``spack use``.
 .. code-block:: Bash
 
     $ git clone https://github.com/spack/spack
+    $ ./spack/bin/spack install environment-modules
     $ . spack/share/spack/setup-env.sh
+    $ spack install unifycr
+    $ spack load unifycr
+
+.. note::
+
+    The initial install could take a while if you don't already have the
+    dependencies installed through Spack or haven't told Spack where they are
+    installed on your system. Type ``spack spec -I unifycr`` before installing
+    to see what Spack is going to do.
+
+**Building with Autotools**
+***************************
+
+Download the latest UnifyCR release from the `Releases
+<https://github.com/LLNL/UnifyCR/releases>`_ page.
+
+**Building the dependencies**
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+UnifyCR requires MPI, LevelDB, and GOTCHA(version 0.0.2).
+
+**With Spack**
+""""""""""""""
+
+Once Spack is installed on your system (see above), you can install just the
+dependencies for an easier manual installation of UnifyCR.
+
+If you use Dotkit then replace ``spack load`` with ``spack use``.
+
+.. code-block:: Bash
+
     $ spack install leveldb
     $ spack install gotcha@0.0.2
-    $ spack install environment-modules
     $ spack load leveldb
     $ spack load gotcha@0.0.2
 
@@ -50,12 +77,12 @@ Then to build UnifyCR:
 .. code-block:: Bash
 
     $ ./autogen.sh
-    $ ./configure --prefix=/path/to/install --enable-debug
+    $ ./configure --prefix=/path/to/install
     $ make
     $ make install
 
-**Building without Spack**
-***************************
+**Without Spack**
+"""""""""""""""""
 
 For users who cannot use Spack, you may fetch version 0.0.2 (compatibility with
 latest release in progress) of `GOTCHA <https://github.com/LLNL/GOTCHA/releases>`_
@@ -84,12 +111,11 @@ PKG_CONFIG_PATH.
 
     $ export PKG_CONFIG_PATH=/path/to/leveldb/pkgconfig
 
-Leave out the path to leveldb in your configure line if you didn't install it
-from source.
+Then to build UnifyCR:
 
 .. code-block:: Bash
 
-    $ ./configure --prefix=/path/to/install --with-gotcha=/path/to/gotcha --enable-debug
+    $ ./configure --prefix=/path/to/install --with-gotcha=/path/to/gotcha
     $ make
     $ make install
 
