@@ -7,7 +7,7 @@
 UnifyCR: A file system for burst buffers
 ========================================
 
-.. global_toc::
+.. toctree::
    :maxdepth: 2
    :caption: User Guide
 
