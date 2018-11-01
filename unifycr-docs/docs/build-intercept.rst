@@ -48,6 +48,7 @@ If you use Dotkit then replace ``spack load`` with ``spack use``.
 
     Include or remove variants with Spack when installing UnifyCR when a custom
     build is desired. Type ``spack info unifycr`` for more info.
+
     +---------+--------------------------------------------+----------------------------+
     | Variant |                   Command                  |         Description        |
     +=========+============================================+============================+
@@ -63,7 +64,7 @@ If you use Dotkit then replace ``spack load`` with ``spack use``.
 
     The initial install could take a while as Spack will install build
     dependencies (autoconf, automake, m4, libtool, and pkg-config) as well as
-    any dependencies of dependencies (cmake, perl, etc) if you don't already
+    any dependencies of dependencies (cmake, perl, etc.) if you don't already
     have these dependencies installed through Spack or haven't told Spack where
     they are locally installed on your system (i.e., through a custom
     `packages.yaml <https://spack.readthedocs.io/en/latest/build_settings.html#external-packages>`_).

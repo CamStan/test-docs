@@ -22,7 +22,7 @@ Reporting Bugs
 ==============
 
 Please contact us via the `mailing list <ecp-unifycr@exascaleproject.org>`_ if
-you are't certain that you are experiencing a bug.
+you are not certain that you are experiencing a bug.
 
 You can open a new issue and search existing issues using the
 `issue tracker <https://github.com/LLNL/UnifyCR/issues>`_.
@@ -32,13 +32,16 @@ If you run into an issue, please search the
 issue hasn't been reported before. Open a new issue only if you haven't found
 anything similar to your issue.
 
-**When opening a new issue, please include the following information at the top of the issue:**
-- What operating system (with version) you are using
-- The UnifyCR version you are using
-- Describe the issue you are experiencing
-- Describe how to reproduce the issue
-- Include any warnings or errors
-- Apply any appropriate labels, if necessary
+.. important::
+
+    **When opening a new issue, please include the following information at the top of the issue:**
+
+    - What operating system (with version) you are using
+    - The UnifyCR version you are using
+    - Describe the issue you are experiencing
+    - Describe how to reproduce the issue
+    - Include any warnings or errors
+    - Apply any appropriate labels, if necessary
 
 When a new issue is opened, it is not uncommon for developers to request
 additional information.
