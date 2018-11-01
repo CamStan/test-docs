@@ -47,27 +47,18 @@ If you use Dotkit then replace ``spack load`` with ``spack use``.
 Include or remove variants with Spack when installing UnifyCR when a custom
 build is desired. Type ``spack info unifycr`` for more info.
 
-.. list-table:: UnifyCR Build Variants
+.. table:: UnifyCR Build Variants
    :widths: auto
-   :header-rows: 1
-   :align: center
 
-   * - Variant
-     - Command
-     - Description
-   * - Debug
-     - ``spack install unifycr+debug``
-     - Enable debug build options
-   * - HDF5
-     - ``spack install unifycr+hdf5``
-       
-       ``spack install unifycr+hdf5 ^hdf5~mpi``
-     - Build with parallel HDF5
-        
-       Build with serial HDF5
-   * - NUMA
-     - ``spack install unifycr+numa``
-     - Build with NUMA
+   =======  ========================================  ========================
+   Variant                  Command                          Description
+   =======  ========================================  ========================
+   Debug    ``spack install unifycr+debug``           Enable debug build
+   HDF5     ``spack install unifycr+hdf5``            Build with parallel HDF5
+
+            ``spack install unifycr+hdf5 ^hdf5~mpi``  Build with serial HDF5
+   NUMA     ``spack install unifycr+numa``            Build with NUMA
+   =======  ========================================  ========================
 
 .. attention::
 
