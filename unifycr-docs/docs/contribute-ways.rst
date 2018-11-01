@@ -66,7 +66,7 @@ Pull Requests
 - Please attempt to limit pull requests to a single commit which resolves one
   specific issue.
 - Make sure your commit messages are in the correct format. See the
-  :ref:`Commit Message Format <commit-message-label` section for more
+  :ref:`Commit Message Format <commit-message-label>` section for more
   information.
 - When updating a pull request, squash multiple commits by performing a
   `rebase <https://git-scm.com/docs/git-rebase>`_ (squash).
