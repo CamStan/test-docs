@@ -2,10 +2,12 @@
 Ways to Contribute
 ******************
 
+*First of all, thank you for taking the time to contribute!*
+
+By using the following guidelines, you can help us make UnifyCR even better.
+
 Getting Started
 ===============
-
----------------
 
 Get UnifyCR
 -----------
@@ -17,6 +19,8 @@ Getting Help
 
 To contact the UnifyCR team, send an email to the
 `mailing list <ecp-unifycr@exascaleproject.org>`_.
+
+---------------
 
 Reporting Bugs
 ==============
@@ -51,12 +55,16 @@ developer can resolve it. For example, providing a simple test case is
 extremely helpful. Be prepared to work with the developers investigating your
 issue. Your assistance is crucial in providing a quick solution.
 
+---------------
+
 Suggesting Enhancements
 =======================
 
 Open a new issue in the `issue tracker <https://github.com/LLNL/UnifyCR/issues>`_
 and describe your proposed feature. Why is this feature needed? What problem
 does it solve? Be sure to apply the *enhancement* label to your issue.
+
+---------------
 
 Pull Requests
 =============
@@ -71,7 +79,7 @@ Pull Requests
 - When updating a pull request, squash multiple commits by performing a
   `rebase <https://git-scm.com/docs/git-rebase>`_ (squash).
 - For large pull requests, consider structuring your changes as a stack of
-  logically iindependent patches which build on each other. This makes large
+  logically independent patches which build on each other. This makes large
   changes easier to review and approve which speeds up the merging process.
 - Try to keep pull requests simple. Simple code with comments is much easier to
   review and approve.
@@ -81,6 +89,8 @@ Pull Requests
 - The pull request must pass all regression tests before being accepted.
 - All proposed changes must be approved by a UnifyCR project member.
 
+---------------
+
 Testing
 =======
 
@@ -89,3 +99,14 @@ consider helping us by reporting any functional problems, performance
 regressions, or other suspected issues. By running the latest code on a wide
 range of realistic workloads, configurations, and architectures we're better
 able to quickly identify and resolve issues.
+
+---------------
+
+Documentation
+=============
+
+As UnifyCR is continually improved and updated, it is easy for documentation to
+become out-of-date. Any contributions to the documentation, no matter how
+small, is always greatly appreciated. If you are not in a position to update
+the documentation yourself, please `notify us <ecp-unifycr@exascaleproject.org>`_
+of anything you notice that needs to be changed.
