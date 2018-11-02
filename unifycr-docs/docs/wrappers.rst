@@ -113,7 +113,7 @@ but are known to not actually be supported. This list is written by hand.
 .. explicit external hyperlink targets
 
 .. _cstdio_list.txt: https://github.com/LLNL/UnifyCR/blob/dev/client/check_fns/cstdio_list.txt
-.. _fakechrroot_list.txt: https://github.com/LLNL/UnifyCR/blob/dev/client/check_fns/fakechroot_list.txt
+.. _fakechroot_list.txt: https://github.com/LLNL/UnifyCR/blob/dev/client/check_fns/fakechroot_list.txt
 .. _gotcha_map_unifycr_list.h: https://github.com/LLNL/UnifyCR/blob/dev/client/src/gotcha_map_unifycr_list.h
 .. _gnulibc_list.txt: https://github.com/LLNL/UnifyCR/blob/dev/client/check_fns/gnulibc_list.txt
 .. _posix_list.txt: https://github.com/LLNL/UnifyCR/blob/dev/client/check_fns/posix_list.txt

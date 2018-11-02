@@ -9,7 +9,7 @@ To run the UnifyCR test suite, simply run ``make check`` from your build/t
 directory. Individual tests may be run by hand. The test ``0001-setup.t``
 should normally be run first to start the UnifyCR daemon.
 
-The tests in https://github.com/LLNL/UnifyCR/tree/dev/t are run automatcially
+The tests in https://github.com/LLNL/UnifyCR/tree/dev/t are run automatically
 by `Travis CI`_ along with the :ref:`style checks <style-check-label>` when a
 pull request is created or updated. All pull requests must pass these tests
 before they will be accepted.
@@ -46,13 +46,12 @@ greatly appreciated.
 Shell Script Tests
 ------------------
 
-Test cases in shell scripts are implemented with sharness_, in the which is
-included in the UnifyCR source distribution. See the file sharness.sh_ for all
-available test interfaces. UnifyCR-specific sharness code is implemented in
-scripts in the directory sharness.d_. Scripts in sharness.d_ are primarily
-used to set environment variables and define convenience functions. All
-scripts in sharness.d_ are automatically included when your script sources
-sharness.sh_.
+Test cases in shell scripts are implemented with sharness_, which is included
+in the UnifyCR source distribution. See the file sharness.sh_ for all available
+test interfaces. UnifyCR-specific sharness code is implemented in scripts in
+the directory sharness.d_. Scripts in sharness.d_ are primarily used to set
+environment variables and define convenience functions. All scripts in
+sharness.d_ are automatically included when your script sources sharness.sh_.
 
 The most common way to implement a test case with sharness is to use the
 ``test_expect_success()`` function. Your script must first set a test
@@ -78,12 +77,12 @@ Here is an example of a sharness test:
     test_expect_success "Verify some critical invariant" '
         test 1 -eq 1
     '
-   
+
     test_expect_failure "Prove this someday" '
         test "P" == "NP"
     '
 
-   test_done 
+    test_done 
 
 C Program Tests
 ---------------

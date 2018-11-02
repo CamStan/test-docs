@@ -55,7 +55,9 @@ Commit messages for new changes must meet the following guidelines:
   or a brief description of the bug you are resolving. Each line of the body
   must be 72 characters or less.
 
-An example commit message for new changes is provided below.::
+An example commit message for new changes is provided below.
+
+.. code-block:: none
 
     Capitalized, short (50 chars or less) summary
 

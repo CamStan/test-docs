@@ -51,7 +51,7 @@ build is desired. Type ``spack info unifycr`` for more info.
    :widths: auto
 
    =======  ========================================  ========================
-   Variant                  Command                          Description
+   Variant  Command                                   Description
    =======  ========================================  ========================
    Debug    ``spack install unifycr+debug``           Enable debug build
    HDF5     ``spack install unifycr+hdf5``            Build with parallel HDF5
