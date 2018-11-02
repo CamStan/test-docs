@@ -9,13 +9,40 @@ To run the UnifyCR test suite, simply run ``make check`` from your build/t
 directory. Individual tests may be run by hand. The test ``0001-setup.t``
 should normally be run first to start the UnifyCR daemon.
 
+.. note::
+
+    If you are using Spack to install UnifyCR then there are two ways to
+    manually run these tests:
+
+    1. Upon your installation with Spack
+
+        ``spack install -v --test=root unifycr``
+
+    2. Manually from Spack's build directory
+
+        ``spack install --keep-stage unifycr``
+
+        ``spack cd unifycr``
+
+        ``cd spack-build/t``
+
+        ``make check``
+
 The tests in https://github.com/LLNL/UnifyCR/tree/dev/t are run automatically
 by `Travis CI`_ along with the :ref:`style checks <style-check-label>` when a
 pull request is created or updated. All pull requests must pass these tests
 before they will be accepted.
 
-.. Running the Examples
-   --------------------
+Running the Examples
+--------------------
+
+The UnifyCR examples_ are also being used as integration tests with
+continuation integration tools such as Bamboo_ or GitLab_.
+
+To run any of these examples manually, refer to the :doc:`examples`
+documentation.
+
+.. add information on running all of these when the process is developed
 
 ------------
 
@@ -129,6 +156,9 @@ Here is an example libtap test:
 
 .. explicit external hyperlink targets
 
+.. _Bamboo: https://www.atlassian.com/software/bamboo
+.. _GitLab: https://about.gitlab.com
+.. _examples: https://github.com/LLNL/UnifyCR/tree/dev/examples/src
 .. _libtap library: https://github.com/zorgnax/libtap
 .. _lib/testutil.c: https://github.com/LLNL/UnifyCR/blob/dev/t/lib/testutil.c
 .. _Test Anything Protocol: https://testanything.org
