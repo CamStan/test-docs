@@ -25,6 +25,8 @@ UnifyCR: A file system for burst buffers
 
    contribute-ways
    style-guides
+   testing
+   wrappers
 
 .. toctree::
    :maxdepth: 2
