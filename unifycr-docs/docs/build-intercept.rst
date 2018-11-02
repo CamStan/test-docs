@@ -17,7 +17,7 @@ In this section, we describe how to build UnifyCR with I/O interception.
 .. _build-label:
 
 ---------------------------
-How to build UnifyCR
+How to Build UnifyCR
 ---------------------------
 
 To install all dependencies and set up your build environment, we recommend

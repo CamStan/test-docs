@@ -17,24 +17,21 @@ You can build and run UnifyCR by following :doc:`these instructions <build-inter
 Getting Help
 ------------
 
-To contact the UnifyCR team, send an email to the
-`mailing list <ecp-unifycr@exascaleproject.org>`_.
+To contact the UnifyCR team, send an email to the `mailing list`_.
 
 ---------------
 
 Reporting Bugs
 ==============
 
-Please contact us via the `mailing list <ecp-unifycr@exascaleproject.org>`_ if
-you are not certain that you are experiencing a bug.
+Please contact us via the `mailing list`_ if you are not certain that you are
+experiencing a bug.
 
-You can open a new issue and search existing issues using the
-`issue tracker <https://github.com/LLNL/UnifyCR/issues>`_.
+You can open a new issue and search existing issues using the `issue tracker`_.
 
-If you run into an issue, please search the 
-`issue tracker <https://github.com/LLNL/UnifyCR/issues>`_ first to ensure the
-issue hasn't been reported before. Open a new issue only if you haven't found
-anything similar to your issue.
+If you run into an issue, please search the `issue tracker`_ first to ensure
+the issue hasn't been reported before. Open a new issue only if you haven't
+found anything similar to your issue.
 
 .. important::
 
@@ -60,9 +57,9 @@ issue. Your assistance is crucial in providing a quick solution.
 Suggesting Enhancements
 =======================
 
-Open a new issue in the `issue tracker <https://github.com/LLNL/UnifyCR/issues>`_
-and describe your proposed feature. Why is this feature needed? What problem
-does it solve? Be sure to apply the *enhancement* label to your issue.
+Open a new issue in the `issue tracker`_ and describe your proposed feature.
+Why is this feature needed? What problem does it solve? Be sure to apply the
+*enhancement* label to your issue.
 
 ---------------
 
@@ -108,5 +105,10 @@ Documentation
 As UnifyCR is continually improved and updated, it is easy for documentation to
 become out-of-date. Any contributions to the documentation, no matter how
 small, is always greatly appreciated. If you are not in a position to update
-the documentation yourself, please `notify us <ecp-unifycr@exascaleproject.org>`_
-of anything you notice that needs to be changed.
+the documentation yourself, please notify us via the `mailing list`_ of
+anything you notice that needs to be changed.
+
+.. explicit external hyperlink targets
+
+.. _mailing list: ecp-unifycr@exascaleproject.org
+.. _issue tracker: https://github.com/LLNL/UnifyCR/issues
