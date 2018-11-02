@@ -2,7 +2,7 @@
 Examples
 ********
 
-There are several examples_ available of ways to use UnifyCR. These examples
+There are several examples_ available on ways to use UnifyCR. These examples
 build into static and GOTCHA versions (pure POSIX versions coming soon) and are
 also used as a form of :doc:`intregraton testing <testing>`.
 
@@ -50,7 +50,7 @@ location can be found with the command ``spack location unifycr``.
 
 To navigate to the location of the static and POSIX examples, do:
 
-.. code-blocks:: Bash
+.. code-block:: Bash
 
     $ spack install --keep-stage unifycr
     $ spack cd unifycr
