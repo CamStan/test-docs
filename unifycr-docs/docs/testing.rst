@@ -73,6 +73,7 @@ sysio_suite in `t/Makefile.am`_ and `t/sys/sysio_suite.c`_:
 
     If you're testing C code, you'll need to use environment variables set by
     sharness.
+
     - Create a shell script, *<####-suite-name>.t*, that wraps your suite and
       sources `sharness.d/00-test-env.sh`_ and
       `sharness.d/01-unifycr-settings.sh`_
@@ -81,6 +82,7 @@ sysio_suite in `t/Makefile.am`_ and `t/sys/sysio_suite.c`_:
 
     You can then create the test suite file and any tests to be run in this
     suite.
+
     - Create a <test_suite_name>.c file (i.e., *sysio_suite.c*) that will
       contain the main function and mpi job that drives your suite
 
@@ -101,6 +103,7 @@ sysio_suite in `t/Makefile.am`_ and `t/sys/sysio_suite.c`_:
 
     The source files and flags for the test suite are then added to the bottom
     of `t/Makefile.am`_.
+
     - Add the <test_suite_name>.c and <test_suite_name>.h files to the
       ``<test_suite>_SOURCES`` variable
     - Add additional <test_name>.c files to the ``<test_suite>_SOURCES``
