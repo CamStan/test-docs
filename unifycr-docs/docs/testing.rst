@@ -69,7 +69,7 @@ This makes it so less duplication of files and code is needed in order to create
 additional tests.
 
 To create a new test suite, look at how it is currently done for the
-sysio_suite in `t/Makefile.am`_ and `t/sys/sysio_suite.c`_:
+sysio_suite in `t/Makefile.am`_ and `t/sys/sysio_suite.c`_::
 
     If you're testing C code, you'll need to use environment variables set by
     sharness.
