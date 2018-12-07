@@ -17,7 +17,7 @@ Styling Code
 The astyle tool can be used to apply much of the required code styling used in
 the project.
 
-.. code-block:: Bash 
+.. code-block:: Bash
     :caption: To apply style to the source file foo.c:
 
     astyle --options=scripts/unifycr.astyle foo.c

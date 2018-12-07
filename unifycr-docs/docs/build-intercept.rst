@@ -13,7 +13,7 @@ In this section, we describe how to build UnifyCR with I/O interception.
     critical sections (this excludes OpenMPI up to version 3.0.1, the current version as of this writing)"
 
     as specified in the project `github <https://github.com/mdhim/mdhim-tng>`_
-    
+
 .. _build-label:
 
 ---------------------------
@@ -94,17 +94,27 @@ If you use Dotkit then replace ``spack load`` with ``spack use``.
 
 .. code-block:: Bash
 
+    $ spack install environment-modules
+    $
     $ spack install leveldb
     $ spack install gotcha@0.0.2
+    $ spack install flatcc
+    $ 
+    $ git clone https://xgitlab.cels.anl.gov/sds/sds-repo.git sds-repo.git
+    $ cd sds-repo.git
+    $   spack repo add .
+    $ cd ..
+    $ spack install margo
+    $ spack install argobots
 
 .. tip::
 
     You can use ``spack install --only=dependencies unifycr`` to install all of
     UnifyCR's dependencies without installing UnifyCR.
-    
+
     Keep in mind this will also install all the build dependencies and
     dependencies of dependencies if you haven't already installed them through
-    Spack or told Spack where they are locally installed on your system. 
+    Spack or told Spack where they are locally installed on your system.
 
 Then to build UnifyCR:
 
@@ -112,6 +122,10 @@ Then to build UnifyCR:
 
     $ spack load leveldb
     $ spack load gotcha@0.0.2
+    $ spack load flatcc
+    $ spack load mercury
+    $ spack load argobots
+    $ spack load margo
     $
     $ ./autogen.sh
     $ ./configure --prefix=/path/to/install --enable-debug
@@ -127,32 +141,16 @@ latest release in progress) of `GOTCHA <https://github.com/LLNL/GOTCHA/releases>
 And leveldb (if not already installed on your system):
 `leveldb <https://github.com/google/leveldb/releases/tag/v1.20>`_
 
-If you installed leveldb from source then you may have to add the pkgconfig file
-for leveldb manually. This is assuming your install of leveldb does not contain
-a .pc file (it usually doesn't). Then, add the path to that file to
-PKG_CONFIG_PATH.
+To download and install Margo and its dependencies (Mercury and Argobots)
+follow the instructions here: `Margo <https://xgitlab.cels.anl.gov/sds/margo>`_
 
-.. code-block:: Bash
-
-    $ cat leveldb.pc
-    #leveldb.pc
-    prefix=/path/to/leveldb/install
-    exec_prefix=/path/to/leveldb/install
-    libdir=/path/to/leveldb/install/lib64
-    includedir=/path/to/leveldb/install/include
-    Name: leveldb
-    Description: a fast key-value storage library
-    Version: 1.20
-    Cflags: -I${includedir}
-    Libs: -L${libdir} -lleveldb
-
-    $ export PKG_CONFIG_PATH=/path/to/leveldb/pkgconfig
+To get flatcc `flatcc <https://github.com/dvidelabs/flatcc>`_
 
 Then to build UnifyCR:
 
 .. code-block:: Bash
 
-    $ ./configure --prefix=/path/to/install --enable-debug --with-gotcha=/path/to/gotcha
+    $ ./configure --prefix=/path/to/install --enable-debug --with-gotcha=/path/to/gotcha --with-leveldb=/path/to/leveldb --with-mercury=/path/to/mercury --with-argobots=/path/to/argobots --with-margo=/path/to/margo --with-flatcc=/path/to/flatcc
     $ make
     $ make install
 

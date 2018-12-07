@@ -63,7 +63,7 @@ in the source distribution tarball.
    established
 
 ------------
-   
+
 Implementing Tests
 ==================
 
@@ -109,7 +109,7 @@ Here is an example of a sharness test:
         test "P" == "NP"
     '
 
-    test_done 
+    test_done
 
 C Program Tests
 ---------------

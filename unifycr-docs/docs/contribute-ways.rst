@@ -66,7 +66,7 @@ Why is this feature needed? What problem does it solve? Be sure to apply the
 Pull Requests
 =============
 
-- All pull requests much be based on the current *dev* branch and apply without
+- All pull requests must be based on the current *dev* branch and apply without
   conflicts.
 - Please attempt to limit pull requests to a single commit which resolves one
   specific issue.

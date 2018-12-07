@@ -4,7 +4,7 @@ Wrapper Guide
 
 .. warning::
 
-    This document is out-of-date as the process for generating 
+    This document is out-of-date as the process for generating
     :ref:`unifycr_list.txt <unifycr-list-label>` has bugs which causes the
     generation of :ref:`gotcha_map_unifycr_list.h <gotcha-list-label>` to have
     bugs as well. More information on this can be found in `issue #172
@@ -43,7 +43,7 @@ work.
 
 .. code-block:: Bash
 
-    uniifycr_check_fns <executable>
+    unifycr_check_fns <executable>
 
 ------------
 

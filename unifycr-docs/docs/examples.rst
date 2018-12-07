@@ -16,7 +16,7 @@ Install Location
 ----------------
 
 Upon installation of UnifyCR, the example programs are installed into the
-*install/libexec* folder. 
+*install/libexec* folder.
 
 Installed with Spack
 ^^^^^^^^^^^^^^^^^^^^
@@ -91,7 +91,7 @@ to aid in this process.
     [prompt]$ ./sysio-write-static --help
 
     Usage: sysio-write-static [options...]
-    
+
     Available options:
      -b, --blocksize=<size in bytes>  logical block size for the target file
                                       (default 1048576, 1MB)
