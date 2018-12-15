@@ -230,7 +230,8 @@ by its description and potentially a TODO/SKIP message. Once all the tests
 have completed (either from being run manually or by `Travis CI`_), the overall
 results are printed out, as shown in the image on the right.
 
-----------
+
+
 
 There are six possibilites for the status of each test: PASS, FAIL, XFAIL,
 XPASS, SKIP, and ERROR.
