@@ -226,10 +226,11 @@ Interpreting the Results
         :align: center
 
 After a test runs, its result is printed out consisting of its status followed
-by it's description and potentially a TODO/SKIP message. Once all the tests
+by its description and potentially a TODO/SKIP message. Once all the tests
 have completed (either from being run manually or by `Travis CI`_), the overall
 results are printed out, as shown in the image on the right.
 
+----------
 
 There are six possibilites for the status of each test: PASS, FAIL, XFAIL,
 XPASS, SKIP, and ERROR.
@@ -240,11 +241,11 @@ FAIL
     The test did not have the desired result. These must be fixed before any
     code changes can be accepted.
 
-    If a FAIL occured after code had been added/changed then it is most likely
-    a bug was introduced that caused the test to fail. Some tests may fail as a
-    result of earlier tests failing. Fixing a bug that caused an earlier test
-    to fail and start passing could cause subsequent tests to pass again as
-    well.
+    If a FAIL occured after code had been added/changed then most likely a bug
+    was introduced that caused the test to fail. Some tests may fail as a
+    result of earlier tests failing. Fix bugs that are causing earlier tests
+    to fail first as, once they start passing, subsequent tests are likely to
+    start passing again as well.
 XFAIL
     The test was expected to fail, and it did fail.
 
@@ -253,10 +254,11 @@ XFAIL
     but the cause of the bug hasn't been found/resolved yet. An optional
     message can be passed to the ``todo("message")`` call which will be printed
     after the test has run. Use this to explain how the test should behave or
-    any thoughts on why it might be failing. XFAILS are not meant to be used to
-    make a failing test "pass" as a result of a bug introduced by code changes.
+    any thoughts on why it might be failing. An XFAIL is not meant to be used
+    to make a failing test start "passing" if a bug was introduced by code
+    changes.
 XPASS
-    A test that was expected to fail, passed. These must be fixed before any
+    A test passed that was expected to fail. These must be fixed before any
     code changes can be accepted.
 
     The relationship of an XPASS to an XFAIL is the same as that of a FAIL to a
@@ -274,7 +276,7 @@ SKIP
     subsequent tests to skip. Remove these if it is no longer desired for those
     tests to be skipped.
 ERROR
-    A test or tests suite exited with a non-zero status.
+    A test or test suite exited with a non-zero status.
 
     When a test fails, the containing test suite will exit with a non-zero
     status, causing an ERROR. Fixing any test failures should resolve the
