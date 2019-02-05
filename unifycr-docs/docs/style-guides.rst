@@ -43,7 +43,7 @@ command:
 
     This command will only check specific changes and additions to files that
     are already tracked by git. Run the command ``git add -N
-    [<untracked_file>...]`` first in order to style check new files as well. 
+    [<untracked_file>...]`` first in order to style check new files as well.
 
 ------------
 

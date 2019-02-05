@@ -231,9 +231,7 @@ have completed (either from being run manually or by `Travis CI`_), the overall
 results are printed out, as shown in the image on the right.
 
 
-
-
-There are six possibilites for the status of each test: PASS, FAIL, XFAIL,
+There are six possibilities for the status of each test: PASS, FAIL, XFAIL,
 XPASS, SKIP, and ERROR.
 
 PASS
@@ -242,7 +240,7 @@ FAIL
     The test did not have the desired result. These must be fixed before any
     code changes can be accepted.
 
-    If a FAIL occured after code had been added/changed then most likely a bug
+    If a FAIL occurred after code had been added/changed then most likely a bug
     was introduced that caused the test to fail. Some tests may fail as a
     result of earlier tests failing. Fix bugs that are causing earlier tests
     to fail first as, once they start passing, subsequent tests are likely to
