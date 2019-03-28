@@ -561,7 +561,7 @@ Figure \ `1 <#fig:restart>`__ in which a 4-node job using the
 ``Partner`` scheme allocates 5 nodes and successfully restarts within
 the allocation after a node fails.
 
-.. figure:: fig/restart
+.. figure:: fig/restart.png
    :alt: Example restart after a failed node with ``Partner``
    :name: fig:restart
    :width: 12cm

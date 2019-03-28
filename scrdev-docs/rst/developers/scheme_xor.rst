@@ -49,7 +49,7 @@ the process. Then a reduce-scatter is computed across the set of logical
 files. The resulting chunk from this reduce-scatter is the data that the
 process stores in its ``XOR`` file.
 
-.. figure:: fig/xor
+.. figure:: fig/xor.png
    :alt: XOR reduce-scatter
    :name: fig:xor
    :width: 12cm
@@ -67,7 +67,7 @@ end of each logical file with zeros, such that each logical file extends
 to the number of bytes contained in :math:`N-1` chunks. This extension
 is efficient when all processes write about the same amount of data.
 
-.. figure:: fig/xor_general
+.. figure:: fig/xor_general.png
    :alt: Extension to multiple files
    :width: 12cm
 
@@ -116,7 +116,7 @@ Figure \ `[fig:reduce_scatter] <#fig:reduce_scatter>`__. This algorithm
 is implemented in ``scr_reddesc_apply_xor()`` in
 ``scr_reddesc_apply.c``.
 
-.. figure:: fig/reduce_scatter
+.. figure:: fig/reduce_scatter.png
    :alt: XOR reduce-scatter implementation
    :width: 12cm
 
@@ -279,7 +279,7 @@ is implemented in ``scr_reddesc_recover_xor()`` in
 ``scr_reddesc_recover.c``. An example is illustrated in
 Figure \ `[fig:xor_reduce] <#fig:xor_reduce>`__.
 
-.. figure:: fig/xor_reduce
+.. figure:: fig/xor_reduce.png
    :alt: Pipelined XOR reduction to root
    :width: 12cm
 
