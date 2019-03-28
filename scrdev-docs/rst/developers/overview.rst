@@ -392,7 +392,7 @@ the prefix directory is ``/p/lscratchb/user1/simulation123``. The
 control and cache directories are storage devices local to the compute
 node.
 
-.. figure:: fig/directories_wide
+.. figure:: fig/directories_wide.png
    :alt: Example of SCR Directories
    :width: 12cm
 

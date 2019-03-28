@@ -32,7 +32,7 @@ and writing and reading datasets in cache can be orders of magnitude faster than
 
 .. _fig-aggr_bw:
 
-.. figure:: users/fig/aggr_bw.png
+.. figure:: developers/fig/aggr_bw.png
 
    Aggregate write bandwidth on Coastal
 
