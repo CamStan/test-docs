@@ -6,9 +6,26 @@
 Scalable Checkpoint / Restart (SCR) Developer Guide
 ===================================================
 
-The Scalable Checkpoint / Restart (SCR) library enables MPI applications
-to utilize distributed storage on Linux clusters to attain high file I/O bandwidth
-for checkpointing, restarting, and writing large datasets.
+Welcome to the Developers Guide for the Scalable Checkpoint / Restart (SCR)
+library. This guide contains three main sections to help developers get up to
+speed with SCR:
+
+Concepts
+    This section defines essential concepts and to provide high-level
+    explanation so that one may better understand the source code.
+Files
+    This section covers the contents of many of the files used in SCR. In order
+    to not clutter the user's directory structure on the parallel file system,
+    SCR writes its internal files to hidden "``.scr``" subdirectories.  See
+    Section \ `2.5 <#sec:directories_example>`__ for an example of where these
+    files are written.
+Program Flow
+    This section describes high-level program flow of various library routines
+    and commands.
+
+The SCR library enables MPI applications to utilize distributed storage on
+Linux clusters to attain high file I/O bandwidth for checkpointing, restarting,
+and writing large datasets.
 With SCR, jobs run more efficiently, recompute less work upon a failure,
 and reduce load on shared resources like the parallel file system.
 It provides the most benefit to large-scale jobs that write large datasets.
