@@ -291,7 +291,7 @@ SCR manages numerous files and directories to cache checkpoint data and
 to record its internal state. There are three fundamental types of
 directories: control, cache, and prefix directories. For a detailed
 illustration of how these files and directories are arranged, see the
-example presented in Section \ `1.5 <#sec:directories_example>`__.
+example presented in Section :ref:`directories_example`.
 
 The *control directory* is where SCR writes files to store its internal
 state about the current run. This directory is expected to be stored in
@@ -377,7 +377,7 @@ the term to refer to a directory within the prefix directory on the
 parallel file system. In any particular case, the meaning should be
 clear from the context.
 
-.. _sec:directories_example:
+.. _directories_example:
 
 Example of SCR files and directories
 ------------------------------------

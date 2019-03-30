@@ -17,7 +17,7 @@ Files
     This section covers the contents of many of the files used in SCR. In order
     to not clutter the user's directory structure on the parallel file system,
     SCR writes its internal files to hidden "``.scr``" subdirectories.  See
-    Section \ `2.5 <#sec:directories_example>`__ for an example of where these
+    Section \ :ref:`<directories_example>` for an example of where these
     files are written.
 Program Flow
     This section describes high-level program flow of various library routines
