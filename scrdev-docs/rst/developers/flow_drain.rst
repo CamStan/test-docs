@@ -1,4 +1,4 @@
-.. _sec:flow_drain:
+.. _flow_drain:
 
 Scavenge
 --------
@@ -123,7 +123,7 @@ END ROUND 2
 
 #. Logs end of scavenge, if logging is enabled.
 
-.. _sec:scr_copy:
+.. _scr_copy:
 
 ``src/scr_copy.c``
 ~~~~~~~~~~~~~~~~~~
@@ -203,7 +203,7 @@ END RANK LOOP
 
 #. Print and exit with code indicating success or error.
 
-.. _sec:scr_index:
+.. _scr_index:
 
 ``src/scr_index.c``
 ~~~~~~~~~~~~~~~~~~~
@@ -213,7 +213,7 @@ dataset is indexed and adds to index if not. Attempts to rebuild missing
 files if needed.
 
 #. If “``–add``” option is specified, call ``index_add_dir``
-   (Section `0.1.5 <#sec:flow_index_add_dir>`__) to add directory to
+   (Section :ref:`0.1.5 <flow_index_add_dir>`) to add directory to
    index file.
 
 #. If “``–remove``” option is specified, call ``index_remove_dir`` to
@@ -228,7 +228,7 @@ files if needed.
 #. If “``–list``” option is specified, call ``index_list`` to list
    contents of index file.
 
-.. _sec:flow_index_add_dir:
+.. _flow_index_add_dir:
 
 ``index_add_dir``
 ~~~~~~~~~~~~~~~~~
@@ -246,7 +246,7 @@ exist. Rebuilds files if possible, and writes summary file if needed.
 
 #. Attempt to read summary file from dataset directory. Call
    ``scr_summary_build``
-   (Section `0.1.6 <#sec:flow_index_summary_build>`__) if it does not
+   (Section :ref:`0.1.6 <flow_index_summary_build>`) if it does not
    exist.
 
 #. Read dataset id from summary file, if this fails exit with error.
@@ -258,7 +258,7 @@ exist. Rebuilds files if possible, and writes summary file if needed.
 
 #. Write hash out as new index file.
 
-.. _sec:flow_index_summary_build:
+.. _flow_index_summary_build:
 
 ``scr_summary_build``
 ~~~~~~~~~~~~~~~~~~~~~
@@ -269,24 +269,24 @@ writes summary file.
 #. If we can read the summary file, bail out with success.
 
 #. Call ``scr_scan_files``
-   (Section `0.1.7 <#sec:flow_index_scan_files>`__) to read meta data
+   (Section :ref:`0.1.7 <flow_index_scan_files>`) to read meta data
    for all files in directory. This records all data in a scan hash.
 
 #. Call ``scr_inspect_scan``
-   (Section `0.1.9 <#sec:flow_index_inspect_scan>`__) to examine whether
+   (Section :ref:`0.1.9 <flow_index_inspect_scan>`) to examine whether
    all files in scan hash are complete, and record results in scan hash.
 
 #. If files are missing, call ``scr_rebuild_scan``
-   (Section `0.1.10 <#sec:flow_index_rebuild_scan>`__) to attempt to
+   (Section :ref:`0.1.10 <flow_index_rebuild_scan>`) to attempt to
    rebuild files. After the rebuild, we delete the scan hash, rescan,
    and re-inspect to produce an updated scan hash.
 
 #. Delete extraneous entries from scan hash to form our summary file
-   hash (Section `[sec:summary_file] <#sec:summary_file>`__).
+   hash (Section :ref:`Summary file <summary_file>`).
 
 #. Write out summary file.
 
-.. _sec:flow_index_scan_files:
+.. _flow_index_scan_files:
 
 ``scr_scan_files``
 ~~~~~~~~~~~~~~~~~~
@@ -316,7 +316,7 @@ BEGIN LOOP
 
 END LOOP
 
-.. _sec:flow_index_scan_file:
+.. _flow_index_scan_file:
 
 ``scr_scan_file``
 ~~~~~~~~~~~~~~~~~
@@ -369,7 +369,7 @@ END LOOP
 #. If meta data is for an ``XOR`` file, add an ``XOR`` entry in scan
    hash.
 
-.. _sec:flow_index_inspect_scan:
+.. _flow_index_inspect_scan:
 
 ``scr_inspect_scan``
 ~~~~~~~~~~~~~~~~~~~~
@@ -430,7 +430,7 @@ END LOOP
 #. Return ``SCR_SUCCESS`` if and only if we have all files for each
    dataset.
 
-.. _sec:flow_index_rebuild_scan:
+.. _flow_index_rebuild_scan:
 
 ``scr_rebuild_scan``
 ~~~~~~~~~~~~~~~~~~~~

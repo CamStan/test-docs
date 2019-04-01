@@ -1,4 +1,4 @@
-.. _sec:nodes_file:
+.. _nodes_file:
 
 Nodes file
 ----------

@@ -231,7 +231,7 @@ it is necessary to identify all processes that can access a given
 storage device, such as an SSD mounted on a compute node. To represent
 these groups, the SCR library uses a *group descriptor*. Details of
 group descriptors are given in
-Section :ref:`group_descriptors`.
+Section :ref:`Group descriptors <group_descriptors>`.
 
 The library creates two groups by default: ``NODE`` and ``WORLD``. The
 ``NODE`` group consists of all processes on the same compute node, and
@@ -251,7 +251,7 @@ descriptors can be created. For a given storage class, it is assumed
 that all compute nodes refer to the class using the same directory
 prefix. Each store descriptor is referenced by its directory prefix.
 Details of store descriptors are given in
-Section :ref:`store_descriptors`.
+Section :ref:`Store descriptors <store_descriptors>`.
 
 The library creates one store descriptor by default: ``/tmp``. The
 assumption is made that ``/tmp`` is mounted as a local file system on
@@ -267,8 +267,7 @@ redundancy scheme used, and the frequency with which it should be
 applied. Redundancy descriptors reference both store and group
 descriptors, so these must exist before the SCR library creates its
 internal redundancy descriptors. Details about redundancy descriptors
-are given in
-Section :ref:`redundancy_descriptors`.
+are given in Section :ref:`Redundancy descriptors <redundancy_descriptors>`.
 
 The library creates a default redundancy descriptor. It assumes that
 processes on the same node are likely to fail at the same time. It also
@@ -350,7 +349,8 @@ Within a cache directory, a dataset is written to its own subdirectory
 called the *dataset directory*. SCR associates each dataset with a
 *redundancy descriptor*. The redundancy descriptor describes which cache
 directory should be used, which redundancy scheme to apply, and how
-often it should be used (Section :ref:`redundancy_descriptors`).
+often it should be used
+(Section :ref:`Redundancy descriptors <redundancy_descriptors>`).
 A single run employs a set of one or more redundancy descriptors, and
 each descriptor is assigned a unique integer index counting up from 0.
 When starting a new checkpoint, SCR selects a redundancy descriptor, and
@@ -360,7 +360,8 @@ directory. The full path of the dataset directory is of the form:
 
 Finally, the *prefix directory* is a directory on the parallel file
 system that the user specifies. SCR copies datasets to the prefix
-directory for permanent storage (Section fetch_flush_drain_). The
+directory for permanent storage
+(Section :ref:`Fetch, Flush, and scavenge <fetch_flush_drain>`). The
 prefix directory should be accessible from all compute nodes, and the
 user must ensure that the prefix directory name is unique for each job.
 For each dataset stored in the prefix directory, SCR creates and manages
@@ -401,8 +402,8 @@ The full path of the control directory is ``/tmp/user1/scr.1145655``.
 This is derived from the concatenation of the base directory (``/tmp``),
 the user name (``user1``), and the allocation id (``1145655``). SCR
 keeps files to persist its internal state in the control directory,
-including filemap files (Section :ref:`filemap_file`) and the transfer
-file (Section :ref:`transfer_file`).
+including filemap files (Section :ref:`Filemap files <filemap_file>`) and the transfer
+file (Section :ref:`Transfer file <transfer_file>`).
 
 Similarly, the cache directory is ``/ssd/user1/scr.1145655``, which is
 derived from the concatenation of the cache base directory (``/ssd``),
@@ -422,10 +423,10 @@ file system that is specified by the user, and it is unique to the
 particular simulation the user is running (``simulation123``). The
 prefix directory contains dataset directories. It also contains a hidden
 ``.scr`` directory where SCR writes the index file to record info for
-each of the datasets (Section :ref:`index_file`).
-The SCR library also writes the halt file (Section :ref:`halt_file>`), the
-flush file (Section :ref:`flush_file>`), and the nodes file
-(Section :ref:`nodes_file>`) to the hidden ``.scr`` directory.
+each of the datasets (Section :ref:`Index file <index_file>`).
+The SCR library also writes the halt file (Section :ref:`Halt file <halt_file>`), the
+flush file (Section :ref:`Flush file <flush_file>`), and the nodes file
+(Section :ref:`Nodes file <nodes_file>`) to the hidden ``.scr`` directory.
 
 While the user provides the prefix directory, SCR defines the name of
 each dataset directory to be “``scr.dataset.<id>``” where ``<id>`` is
@@ -435,8 +436,8 @@ the parallel file system (corresponding to dataset ids 10, 12, and 18).
 Within each dataset directory, SCR stores the files written by the
 application. SCR also creates a hidden ``.scr`` subdirectory, and this
 hidden directory contains redundancy files and filemap files. SCR also
-stores a summary file (Section :ref:`summary_file`) and rank2file map files
-(Section :ref:`rank2file_file`) in which it records information needed to
+stores a summary file (Section :ref:`Summary file <summary_file>`) and rank2file map files
+(Section :ref:`Rank2file map <rank2file_file>`) in which it records information needed to
 fetch files from the directory in order to restart the job from the checkpoint.
 
 .. _redundancy:
@@ -520,8 +521,7 @@ parallel file system only to read them back during the restart. In
 addition, SCR provides support for the use of spare nodes. A job can
 allocate more nodes than it needs and use the extra nodes to fill in for
 any failed nodes during a restart. SCR includes a set of scripts which
-encode much of the restart logic
-(Section :ref:`scripts`).
+encode much of the restart logic (Section :ref:`scripts`).
 
 Upon encountering a failure, SCR relies on the MPI library, the resource
 manager, or some other external service to kill the current run. After
@@ -546,9 +546,11 @@ disabled, SCR deletes all files from cache and restarts from a
 checkpoint on the parallel file system.
 
 An example restart scenario is illustrated in
-Figure \ `1 <#fig:restart>`__ in which a 4-node job using the
+Figure :ref:`1 <restart_fig>` in which a 4-node job using the
 ``Partner`` scheme allocates 5 nodes and successfully restarts within
 the allocation after a node fails.
+
+.. _restart_fig:
 
 .. figure:: fig/restart.png
    :alt: Example restart after a failed node with ``Partner``
@@ -593,8 +595,8 @@ Parallel file system outage.
 There are other catastrophic failure cases not listed here. Checkpoints
 must be written to the parallel file system with some moderate frequency
 so as not to lose too much work in the event of a catastrophic failure.
-Section fetch_flush_drain_ provides details on how to configure SCR to
-make occasional writes to the parallel file system.
+Section :ref:`Fetch, Flush, and scavenge <fetch_flush_drain>` provides details
+on how to configure SCR to make occasional writes to the parallel file system.
 
 By default, the current implementation stores only the most recent
 checkpoint in cache. One can change the number of checkpoints stored in
@@ -631,7 +633,7 @@ asynchronous.
 
 Each time an SCR job starts, SCR first inspects the cache and attempts
 to distribute files for a scalable restart as discussed in
-Section restart_. If the cache is empty or the
+Section :ref:`Scalable restart <restart`. If the cache is empty or the
 distribute operation fails or is disabled, SCR attempts to fetch a
 checkpoint from the prefix directory to fill the cache. SCR reads the
 index file and attempts to fetch the most recent checkpoint, or

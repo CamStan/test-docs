@@ -1,4 +1,4 @@
-.. _sec:redundancy_descriptors:
+.. _redundancy_descriptors:
 
 Redundancy descriptors
 ======================
@@ -331,7 +331,7 @@ Interacting with filemaps
 Redundancy descriptor hashes are cached in filemaps. There are functions
 to set, get, and unset a redundancy descriptor hash in a filemap for a
 given dataset id and rank id
-(Section `[sec:filemap_redundancy_descriptors] <#sec:filemap_redundancy_descriptors>`__).
+(Section :ref:`Filemap redundancy descriptors <filemap_redundancy_descriptors>`).
 There are additional functions to extract info from a redundancy
 descriptor hash that is stored in a filemap.
 

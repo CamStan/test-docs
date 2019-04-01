@@ -1,4 +1,4 @@
-.. _sec:filemap:
+.. _filemap:
 
 Filemap
 =======
@@ -45,10 +45,10 @@ checkpoint ids return -1 if there is no valid dataset or checkpoint
 contained in the filemap that matches a particular query.
 
 The ``scr_filemap`` makes heavy use of the ``scr_hash`` data structure
-(Section `[sec:hash] <#sec:hash>`__). The ``scr_hash`` is utilized in
+(Section :ref:`Hash <hash>`). The ``scr_hash`` is utilized in
 the ``scr_filemap`` API and its implementation.
 
-.. _sec:filemap_example:
+.. _filemap_example:
 
 Example filemap hash
 --------------------
@@ -111,7 +111,7 @@ dataset ids are listed in the hash of a ``DSET`` element. Finally, each
 dataset id contains elements for the expected number of files (under
 ``FILES``), the file names (under ``FILE``), the redundancy descriptor
 hash (under ``REDDESC``, see
-Section \ `[sec:redundancy_descriptors] <#sec:redundancy_descriptors>`__)
+Section :ref:`Redundancy descriptors <redundancy_descriptors>`)
 that describes the redundancy scheme applied to the dataset files, and a
 hash providing details about the dataset (under ``DATADESC``). In
 addition, there may be arbitrary tags such as the ``PARTNER`` element.
@@ -376,7 +376,7 @@ Dataset descriptors
 
 The filemap also records dataset descriptors for a given rank and
 dataset id. These descriptors associate attributes with a dataset (see
-Section \ `[sec:datasets] <#sec:datasets>`__).
+Section :ref:`Datasets <datasets>`).
 
 To record a dataset descriptor for a given rank and dataset id.
 
@@ -403,7 +403,7 @@ File meta data
 In addition to recording the filenames for a given rank and dataset, the
 filemap also records meta data for each file, including the expected
 size of the file and CRC32 checksums (see
-Section \ `[sec:meta] <#sec:meta>`__).
+Section \ :ref:`Meta data <meta>`).
 
 To record meta data for a file.
 
@@ -427,14 +427,14 @@ To unset meta data for a file.
 One must specify the same filename that was used during the call to
 ``scr_filemap_add_file()``.
 
-.. _sec:filemap_redundancy_descriptors:
+.. _filemap_redundancy_descriptors:
 
 Redundancy descriptors
 ~~~~~~~~~~~~~~~~~~~~~~
 
 A redundancy descriptor is a data structure that describes the location
 and redundancy scheme that is applied to a set of dataset files in cache
-(Section `[sec:redundancy_descriptors] <#sec:redundancy_descriptors>`__).
+(Section :ref:`Redundancy descriptors <redundancy_descriptors>`).
 In addition to knowing what dataset files are in cache, it’s also useful
 to know what redundancy scheme is applied to that data. To do this, a
 redundancy descriptor can be associated with a given dataset and rank in

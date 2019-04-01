@@ -30,13 +30,13 @@ in ``scr.c``.
    used for logging purposes.
 
 #. Call ``scr_groupdescs_create`` to create group descriptors
-   (Section `0.1.1 <#sec:groupdesc_create>`__).
+   (Section :ref:`0.1.1 <groupdesc_create>`).
 
 #. Call ``scr_storedescs_create`` to create store descriptors
-   (Section `0.1.2 <#sec:storedesc_create>`__).
+   (Section :ref:`0.1.2 <storedesc_create>`).
 
 #. Call ``scr_reddescs_create`` to create redundancy descriptors
-   (Section `0.1.3 <#sec:reddesc_create>`__).
+   (Section :ref:`0.1.3 <reddesc_create>`).
 
 #. Check that we have a valid redundancy descriptor that we can use for
    each checkpoint.
@@ -83,10 +83,10 @@ BARRIER
 #. Create empty hash for filemap.
 
 #. Master process for each store reads and distributes info from
-   filemaps (Section `0.1.4 <#sec:distribute_filemap>`__).
+   filemaps (Section :ref:`0.1.4 <distribute_filemap>`).
 
 #. Call ``scr_cache_rebuild`` to rebuild datasets in cache
-   (Section `0.1.5 <#sec:rebuild_loop>`__).
+   (Section :ref:`0.1.5 <rebuild_loop>`).
 
 #. If rebuild was successful, call ``scr_flush_file_rebuild`` to update
    flush file.
@@ -97,7 +97,7 @@ BARRIER
    ``scr_cache_purge`` to clear cache (delete all files).
 
 #. If fetch is enabled, call ``scr_fetch_sync`` to read checkpoint from
-   parallel file system (Section `0.1.12 <#sec:fetch_loop>`__).
+   parallel file system (Section :ref:`0.1.12 <fetch_loop>`).
 
 #. If the fetch failed, clear the cache again.
 
@@ -108,13 +108,13 @@ BARRIER
 #. Start timer to record length of compute phase and log start of
    compute phase.
 
-.. _sec:groupdesc_create:
+.. _groupdesc_create:
 
 scr_groupdescs_create
 ~~~~~~~~~~~~~~~~~~~~~
 
 The group descriptors are kept in the ``scr_groupdescs`` array
-(Section `[sec:group_descriptors] <#sec:group_descriptors>`__). This
+(Section :ref:`Group descriptors] <:group_descriptors>`). This
 function is implemented in ``scr_groupdesc.c``.
 
 #. Read ``GROUPS`` key from ``scr_groupdesc_hash`` which is set while
@@ -142,13 +142,13 @@ bitonic sort on string names, and it returns the number of distinct
 groups across all procs and the group id to which the calling process
 belongs. This id is then used in a call to ``MPI_Comm_split``.
 
-.. _sec:storedesc_create:
+.. _storedesc_create:
 
 scr_storedescs_create
 ~~~~~~~~~~~~~~~~~~~~~
 
 The store descriptors are kept in the ``scr_storedescs`` array
-(Section `[sec:store_descriptors] <#sec:store_descriptors>`__). This
+(Section :ref:`Store descriptors <store_descriptors>`). This
 function is implemented in ``scr_storedesc.c``.
 
 #. Read ``STORE`` key from ``scr_storedesc_hash`` which is set while
@@ -174,13 +174,13 @@ associated storage device. This communicator is used to coordinate
 processes when accessing the device. It is created by duplicating a
 communicator from a group descriptor.
 
-.. _sec:reddesc_create:
+.. _reddesc_create:
 
 scr_reddescs_create
 ~~~~~~~~~~~~~~~~~~~
 
 The redundancy descriptors are kept in the ``scr_reddescs`` array
-(Section `[sec:redundancy_descriptors] <#sec:redundancy_descriptors>`__).
+(Section :ref:`Redundancy descriptors <redundancy_descriptors>`).
 This function is implemented in ``scr_reddesc.c``.
 
 #. Read ``CKPT`` key from ``scr_reddesc_hash`` which is set while
@@ -204,7 +204,7 @@ redundancy data. To build the communicator, a new communicator is
 created by splitting ``scr_comm_world`` into subcommunicators consisting
 of processes from different failure groups.
 
-.. _sec:distribute_filemap:
+.. _distribute_filemap:
 
 scr_scatter_filemaps
 ~~~~~~~~~~~~~~~~~~~~
@@ -237,7 +237,7 @@ the prior run. This function is implemented in ``scr_cache_rebuild.c``.
 
 #. Each process writes new filemap file.
 
-.. _sec:rebuild_loop:
+.. _rebuild_loop:
 
 scr_cache_rebuild
 ~~~~~~~~~~~~~~~~~
@@ -261,14 +261,14 @@ LOOP
 #. Otherwise, log which dataset we are attempting to rebuild.
 
 #. Distribute hash for this dataset and store in map object
-   (Section `0.1.6 <#sec:distribute_dset_hash>`__).
+   (Section :ref:`0.1.6 <distribute_dset_hash>`).
 
 #. If we fail to distribute the hash to all processes, delete this
    dataset from cache and loop.
 
 #. Distribute redundancy descriptors for this dataset and store in
    temporary redundancy descriptor object
-   (Section `0.1.7 <#sec:distribute_reddesc>`__). This informs each
+   (Section :ref:`0.1.7 <distribute_reddesc>`). This informs each
    process about the cache device and the redundancy scheme to use for
    this dataset.
 
@@ -278,12 +278,12 @@ LOOP
 #. Create dataset directory in cache according to redundancy descriptor.
 
 #. Distribute files to the ranks that wrote them
-   (Section `0.1.8 <#sec:distribute_files>`__). The owner ranks may now
+   (Section :ref:`0.1.8 <distribute_files>`). The owner ranks may now
    be on different nodes.
 
 #. Rebuild any missing files for this dataset using redundancy scheme
    specified in redundancy descriptor
-   (Section `0.1.9 <#sec:rebuild_files>`__).
+   (Section :ref:`0.1.9 <rebuild_files>`).
 
 #. If the rebuild fails, delete this dataset from cache and loop.
 
@@ -301,7 +301,7 @@ EXIT LOOP
 #. Stop timer and log whether we were able to rebuild any dataset from
    cache.
 
-.. _sec:distribute_dset_hash:
+.. _distribute_dset_hash:
 
 scr_distribute_datasets
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -332,7 +332,7 @@ filemap.
 
 #. Delete send hash.
 
-.. _sec:distribute_reddesc:
+.. _distribute_reddesc:
 
 scr_distribute_reddescs
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -369,7 +369,7 @@ user may have configured new schemes for the current run.
 
 #. Delete send and receive hashes from exchange.
 
-.. _sec:distribute_files:
+.. _distribute_files:
 
 scr_distribute_files
 ~~~~~~~~~~~~~~~~~~~~
@@ -493,7 +493,7 @@ EXIT LOOP ROUNDS
 
 #. Delete bad files (incomplete or inaccessible) from the filemap.
 
-.. _sec:rebuild_files:
+.. _rebuild_files:
 
 scr_reddesc_recover
 ~~~~~~~~~~~~~~~~~~~
@@ -506,7 +506,7 @@ function is implemented in in ``scr_reddesc_recover.c``.
 
 #. Attempt to rebuild files according to the redundancy scheme specified
    in the redundancy descriptor. Currently, only ``XOR`` can actually
-   rebuild files (Section `0.1.10 <#sec:attempt_rebuild_files_xor>`__).
+   rebuild files (Section :ref:`0.1.10 <attempt_rebuild_files_xor>`).
 
 #. If the rebuild failed, return with an error.
 
@@ -518,7 +518,7 @@ function is implemented in in ``scr_reddesc_recover.c``.
 #. If so, reapply the redundancy scheme, if needed. No need to do this
    with ``XOR``, since it does this step as part of the rebuild.
 
-.. _sec:attempt_rebuild_files_xor:
+.. _attempt_rebuild_files_xor:
 
 scr_reddesc_recover_xor_attempt
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -544,12 +544,12 @@ redundancy descriptor, and a dataset id as input.
 #. If the current process is in a set which needs to be rebuilt,
    identify which rank needs its files and call
    ``scr_reddesc_recover_xor()`` to rebuild files
-   (Section `0.1.11 <#sec:rebuild_files_xor>`__).
+   (Section :ref:`0.1.11 <rebuild_files_xor>`).
 
 #. Check that the rebuild succeeded on all tasks, return error if not,
    otherwise return success.
 
-.. _sec:rebuild_files_xor:
+.. _rebuild_files_xor:
 
 scr_reddesc_recover_xor
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -643,7 +643,7 @@ ALL
    data as illustrated in
    Figure \ `[fig:xor_reduce] <#fig:xor_reduce>`__. For a full
    description of the redundancy scheme, see
-   Section \ `[sec:raid] <#sec:raid>`__.
+   Section :ref:`XOR algorithm <raid>`.
 
 #. Close our ``XOR`` file.
 
@@ -666,7 +666,7 @@ ALL
 
 #. Free ``XOR`` header hash.
 
-.. _sec:fetch_loop:
+.. _fetch_loop:
 
 scr_fetch_sync
 ~~~~~~~~~~~~~~
@@ -844,8 +844,8 @@ function is implemented in ``scr.c``.
    subdirectory and compute container offsets if used.
 
 #. Apply redundancy scheme specified in redundancy descriptor
-   (Section `0.5.1 <#sec:copy_partner>`__ or
-   Section \ `0.5.2 <#sec:copy_xor>`__).
+   (Section :ref:`0.5.1 <copy_partner>` or
+   Section :ref:`0.5.2 <copy_xor>`).
 
 #. Stop timer measuring length of checkpoint, and log cost of
    checkpoint.
@@ -862,7 +862,7 @@ BARRIER
 #. Start timer for start of compute phase, and log start of compute
    phase.
 
-.. _sec:copy_partner:
+.. _copy_partner:
 
 scr_reddesc_apply_partner
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -912,7 +912,7 @@ EXIT LOOP
 
 #. Free the list of file names.
 
-.. _sec:copy_xor:
+.. _copy_xor:
 
 scr_reddesc_apply_xor
 ~~~~~~~~~~~~~~~~~~~~~
@@ -957,7 +957,7 @@ redundancy descriptor. This function is implemented in
    recorded in the headers of two different ``XOR`` files.
 
 #. Determine chunk size for RAID algorithm
-   (Section `[sec:raid] <#sec:raid>`__) and record this size in the
+   (Section :ref:`XOR algorithm <raid>`) and record this size in the
    ``XOR`` header.
 
 #. Determine full path name for ``XOR`` file.
@@ -970,7 +970,7 @@ redundancy descriptor. This function is implemented in
 #. Write header to file and delete header hash.
 
 #. Execute RAID algorithm and write data to ``XOR`` file
-   (Section `[sec:raid] <#sec:raid>`__).
+   (Section :ref:`XOR algorithm <raid>`).
 
 #. Close and fsync our ``XOR`` file and close each of our dataset files.
 

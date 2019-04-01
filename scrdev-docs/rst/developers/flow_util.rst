@@ -45,7 +45,7 @@ of the two as an uncompressed hostlist.
 
      my @hostlist = scr_hostlist::intersect(\@hostlist1, \@hostlist2);
 
-.. _sec:scr_param_pm:
+.. _scr_param_pm:
 
 ``scripts/common/scr_param.pm.in``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -1,4 +1,4 @@
-.. _sec:transfer_file:
+.. _transfer_file:
 
 Transfer file
 -------------

@@ -1,4 +1,4 @@
-.. _sec:xor:
+.. _xor:
 
 XOR
 ---
@@ -32,7 +32,7 @@ selection algorithm is implemented in ``scr_reddesc_create()`` and
 ``scr_reddesc_create_xor()`` in ``scr_reddesc.c``, as well as
 ``scr_set_partners()`` in ``scr_util_mpi.c``.
 
-.. _sec:raid:
+.. _raid:
 
 XOR algorithm
 ~~~~~~~~~~~~~
@@ -262,8 +262,7 @@ rebuilds files during ``SCR_Init()``. On the other hand, at the end of
 an allocation, SCR can rebuild files after scavenging a dataset from
 cache. This section discusses the method used in ``SCR_Init()``. For
 discussion on rebuilding during a scavenge, see
-Sections \ `[sec:drain] <#sec:drain>`__
-and \ `[sec:flow_drain] <#sec:flow_drain>`__.
+Sections :ref:`Scavenge <drain>` and :ref:`Program Flow>Scavenge <flow_drain>`.
 
 During ``SCR_Init()`` in a restarted run, SCR uses MPI to rebuild files
 in parallel. The processes in each set check whether they need to and
@@ -272,7 +271,7 @@ identify which rank in the set needs its files rebuilt. This rank is
 then set as the root of a reduction over the data in the remaining
 application files and ``XOR`` files to reconstruct the missing data. SCR
 implements a reduction algorithm that achieves the same goals as the
-reduce-scatter described in Section \ `0.1.1 <#sec:raid>`__. Namely, the
+reduce-scatter described in Section :ref:`0.1.1 <raid>`. Namely, the
 implementation attempts to distribute work evenly among all processes,
 minimize network contention, and minimize file accesses. This algorithm
 is implemented in ``scr_reddesc_recover_xor()`` in

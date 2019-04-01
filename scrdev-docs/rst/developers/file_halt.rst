@@ -1,4 +1,4 @@
-.. _sec:halt_file:
+.. _halt_file:
 
 Halt file
 ---------

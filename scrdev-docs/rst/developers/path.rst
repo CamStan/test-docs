@@ -1,4 +1,4 @@
-.. _sec:path:
+.. _path:
 
 File paths
 ==========

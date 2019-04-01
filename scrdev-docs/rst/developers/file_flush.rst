@@ -1,4 +1,4 @@
-.. _sec:flush_file:
+.. _flush_file:
 
 Flush file
 ----------

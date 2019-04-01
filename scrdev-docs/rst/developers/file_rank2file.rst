@@ -1,4 +1,4 @@
-.. _sec:rank2file_file:
+.. _rank2file_file:
 
 Rank2file map
 -------------

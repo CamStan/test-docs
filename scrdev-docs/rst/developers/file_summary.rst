@@ -1,4 +1,4 @@
-.. _sec:summary_file:
+.. _summary_file:
 
 Summary file
 ------------

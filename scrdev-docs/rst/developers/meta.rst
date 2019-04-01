@@ -1,4 +1,4 @@
-.. _sec:meta:
+.. _meta:
 
 Meta data
 =========
@@ -13,11 +13,11 @@ redundancy data), whether the application marked the file as valid or
 invalid, the expected file size, its CRC32 checksum value if computed,
 and the original string the application used to register the file.
 Because the meta data is stored within a filemap
-(Section `[sec:filemap] <#sec:filemap>`__), there is no need to store
+(Section :ref:`Filemap <filemap>`), there is no need to store
 the dataset id or rank id which owns the file.
 
 The ``scr_meta`` data structure makes heavy use of the ``scr_hash`` data
-structure (Section `[sec:hash] <#sec:hash>`__). The ``scr_hash`` is
+structure (Section :ref:`Hash <hash>`). The ``scr_hash`` is
 utilized in the ``scr_meta`` API and its implementation. Essentially,
 ``scr_meta`` objects are specialized ``scr_hash`` objects, which have
 certain well-defined keys (*fields*) and associated functions to access

@@ -1,4 +1,4 @@
-.. _sec:store_descriptors:
+.. _store_descriptors:
 
 Store descriptors
 =================

@@ -1,4 +1,4 @@
-.. _sec:group_descriptors:
+.. _group_descriptors:
 
 Group descriptors
 =================

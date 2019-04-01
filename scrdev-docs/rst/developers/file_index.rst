@@ -1,4 +1,4 @@
-.. _sec:index_file:
+.. _index_file:
 
 Index file
 ----------

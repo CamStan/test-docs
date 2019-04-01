@@ -1,4 +1,4 @@
-.. _sec:filemap_file:
+.. _filemap_file:
 
 Filemap files
 -------------
@@ -24,7 +24,7 @@ files would exist in the SCR control directory.
 
 The contents of each ``filemap_#.scrinfo`` file would look something
 like the example in
-Section \ `[sec:filemap_example] <#sec:filemap_example>`__. The contents
+Section :ref:`Example filemap hash <filemap_example>`. The contents
 of ``filemap.scrinfo`` would be the following:
 
 ::

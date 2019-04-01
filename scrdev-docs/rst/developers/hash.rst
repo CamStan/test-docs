@@ -1,4 +1,4 @@
-.. _sec:hash:
+.. _hash:
 
 Hash
 ====
@@ -702,7 +702,7 @@ Binary format
 
 This section documents the binary format used when serializing a hash.
 
-.. _sec:hash_packed:
+.. _hash_packed:
 
 Packed hash
 ~~~~~~~~~~~
@@ -752,7 +752,7 @@ File Version ``uint16_t`` Integer field that together with File Type defines the
 \                         1 :math:`\rightarrow` ``scr_hash`` file is stored in version 1 format
 File Size    ``uint64_t`` Size of this file in bytes, from first byte of the header to the last byte in the file.
 Flags        ``uint32_t`` Bit flags for file.
-Data         PACKED       Packed hash data (see Section \ `1.4.1 <#sec:hash_packed>`__).
+Data         PACKED       Packed hash data (see Section :ref:`1.4.1 <hash_packed>).
 \            HASH        
 CRC32\*      ``uint32_t`` CRC32 of file, accounts for first byte of header to last byte of Data.
 \                         \*Only exists if ``SCR_FILE_FLAGS_CRC32`` bit is set in Flags.

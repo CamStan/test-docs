@@ -1,4 +1,4 @@
-.. _sec:flow_flush:
+.. _flow_flush:
 
 Flush
 -----
@@ -27,13 +27,13 @@ This is implemented in ``scr_flush_sync.c``.
    started.
 
 #. Get list of files to flush, identify containers, create directories,
-   and create containers (Section `0.1.2 <#sec:flow_flush_prepare>`__).
+   and create containers (Section :ref:`0.1.2 <flow_flush_prepare>`).
    Store list in new hash.
 
 #. Flush data to files or containers
-   (Section `0.1.7 <#sec:flow_flush_data>`__).
+   (Section :ref:`0.1.7 <flow_flush_data>`).
 
-#. Write summary file (Section `0.1.9 <#sec:flow_flush_complete>`__).
+#. Write summary file (Section :ref:`0.1.9 <flow_flush_complete>`).
 
 #. Get total bytes from dataset hash in filemap.
 
@@ -43,7 +43,7 @@ This is implemented in ``scr_flush_sync.c``.
 
 #. Stop timer, compute bandwidth, log end.
 
-.. _sec:flow_flush_prepare:
+.. _flow_flush_prepare:
 
 scr_flush_prepare
 ~~~~~~~~~~~~~~~~~
@@ -53,10 +53,10 @@ flushed, also create corresponding directories and container files. This
 is implemented in ``scr_flush.c``.
 
 #. Build hash of files, directories, and containers for flush
-   (Section `0.1.3 <#sec:flow_flush_identify>`__).
+   (Section :ref:`0.1.3 <flow_flush_identify>`).
 
 #. Create directory tree for dataset
-   (Section `0.1.6 <#sec:flow_flush_create_dirs>`__).
+   (Section :ref:`0.1.6 <flow_flush_create_dirs>`).
 
 #. Create container files in ``scr_flush_create_containers``.
 
@@ -64,7 +64,7 @@ is implemented in ``scr_flush.c``.
       offset 0, have it open, create, truncate, and close the container
       file.
 
-.. _sec:flow_flush_identify:
+.. _flow_flush_identify:
 
 scr_flush_identify
 ~~~~~~~~~~~~~~~~~~
@@ -83,12 +83,12 @@ Creates a hash of files to flush. This is implemented in
       its meta data to file list hash.
 
 #. Add directories to file list hash
-   (Section `0.1.4 <#sec:flow_flush_identify_dirs>`__).
+   (Section :ref:`0.1.4 <flow_flush_identify_dirs>`).
 
 #. Add containers to file list hash in
-   (Section `0.1.5 <#sec:flow_flush_identify_containers>`__).
+   (Section :ref:`0.1.5 <flow_flush_identify_containers>`).
 
-.. _sec:flow_flush_identify_dirs:
+.. _flow_flush_identify_dirs:
 
 scr_flush_identify_dirs
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -140,7 +140,7 @@ in ``scr_flush.c``.
    #. Record dataset directory as destination path for each file in file
       list hash.
 
-.. _sec:flow_flush_identify_containers:
+.. _flow_flush_identify_containers:
 
 scr_flush_identify_containers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -179,7 +179,7 @@ containers, offsets, and length.s This is implemented in
 
 #. Check that all procs identified their containers.
 
-.. _sec:flow_flush_create_dirs:
+.. _flow_flush_create_dirs:
 
 scr_flush_create_dirs
 ~~~~~~~~~~~~~~~~~~~~~
@@ -205,11 +205,11 @@ to hold dataset. This is implemented in ``scr_flush.c``.
 #. Barrier across all procs.
 
 #. Have each leader create its directory as designated in
-   Section \ `0.1.4 <#sec:flow_flush_identify_dirs>`__.
+   Section :ref:`0.1.4 <flow_flush_identify_dirs>`.
 
 #. Ensure that all directories were created.
 
-.. _sec:flow_flush_data:
+.. _flow_flush_data:
 
 scr_flush_data
 ~~~~~~~~~~~~~~
@@ -229,7 +229,7 @@ failed.
 RANK 0
 
 #. Flush files in list, writing data to containers if used
-   (Section `0.1.8 <#sec:flow_flush_list>`__).
+   (Section :ref:`0.1.8 <flow_flush_list>`).
 
 #. Allocate arrays to manage a window of active writers.
 
@@ -248,13 +248,13 @@ NON-RANK 0
 #. Wait for go ahead message.
 
 #. Flush files in list, writing data to containers if used
-   (Section `0.1.8 <#sec:flow_flush_list>`__).
+   (Section :ref:`0.1.8 <flow_flush_list>`).
 
 #. Send completion message to rank 0 indicating whether copy succeeded.
 
 #. Execute allreduce to inform all procs whether flush was successful.
 
-.. _sec:flow_flush_list:
+.. _flow_flush_list:
 
 scr_flush_files_list
 ~~~~~~~~~~~~~~~~~~~~
@@ -312,7 +312,7 @@ NON-CONTAINERS
 
 END LOOP
 
-.. _sec:flow_flush_complete:
+.. _flow_flush_complete:
 
 scr_flush_complete
 ~~~~~~~~~~~~~~~~~~
@@ -324,7 +324,7 @@ Writes out summary and rank2file map files. This is implemented in
 
 #. Get dataset directory path.
 
-#. Write summary file (Section `0.1.10 <#sec:flow_flush_summary>`__).
+#. Write summary file (Section :ref:`0.1.10 <flow_flush_summary>`).
 
 #. Update index file to mark dataset as “current”.
 
@@ -332,7 +332,7 @@ Writes out summary and rank2file map files. This is implemented in
 
 #. Update flush file that dataset is now on parallel file system.
 
-.. _sec:flow_flush_summary:
+.. _flow_flush_summary:
 
 scr_flush_summary
 ~~~~~~~~~~~~~~~~~
@@ -354,7 +354,7 @@ more than 1MB to each file. This is implemented in ``scr_flush.c``.
 #. Define name of rank2file map files.
 
 #. Funnel rank2file data up tree in recursive manner
-   (Section `0.1.11 <#sec:flow_flush_summary_map>`__).
+   (Section :ref:`0.1.11 <flow_flush_summary_map>`).
 
 #. If process is a writer, write rank2file map data to file.
 
@@ -362,7 +362,7 @@ more than 1MB to each file. This is implemented in ``scr_flush.c``.
 
 #. Check that all procs wrote all files successfully.
 
-.. _sec:flow_flush_summary_map:
+.. _flow_flush_summary_map:
 
 scr_flush_summary_map
 ~~~~~~~~~~~~~~~~~~~~~

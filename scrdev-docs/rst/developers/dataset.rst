@@ -1,4 +1,4 @@
-.. _sec:datasets:
+.. _datasets:
 
 Datasets
 ========

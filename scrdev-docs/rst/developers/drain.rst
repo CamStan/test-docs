@@ -1,4 +1,4 @@
-.. _sec:drain:
+.. _drain:
 
 Scavenge
 ========
@@ -9,7 +9,7 @@ file system. If not, these commands execute other SCR commands to
 scavenge this checkpoint before the allocation ends. In this section, we
 detail key concepts referenced as part of the scavenge operations.
 Detailed program flow for these operations is provided in
-Section \ `[sec:flow_drain] <#sec:flow_drain>`__.
+Section :ref:`Program Flow>Scavenge <flow_drain>`.
 
 Rank filemap file
 -----------------
@@ -18,7 +18,7 @@ The ``scr_copy`` command is a serial program (non-MPI) that executes on
 a compute node and copies all files belonging to a specified dataset id
 from the cache to a specified dataset directory on the parallel file
 system. It is implemented in ``scr_copy.c`` whose program flow is
-described in Section \ `[sec:scr_copy] <#sec:scr_copy>`__. The
+described in Section :ref:`<scr_copy>`. The
 ``scr_copy`` command copies all application files and SCR redundancy
 data files. In addition, it writes a special filemap file for each rank
 to the dataset directory. The name of this filemap file is of the
@@ -100,7 +100,7 @@ dataset id ``6``. Those files are named ``rank_2.ckpt`` and
 ``3_of_4_in_0.xor``.
 
 This format is similar to the filemap hash format described in
-Section \ `[sec:filemap] <#sec:filemap>`__. The main differences are
+Section :ref:`Filemap <filemap>`. The main differences are
 that files are listed using relative paths instead of absolute paths and
 there are no redundancy descriptors. The paths are relative so that the
 dataset directory on the parallel file system may be moved or renamed.
@@ -114,11 +114,11 @@ After ``scr_copy`` copies files from the cache on each compute node to
 the parallel file system, the ``scr_index`` command runs to check
 whether all files were recovered, rebuild missing files if possible, and
 add an entry for the dataset to the SCR index file
-(Section `[sec:index_file] <#sec:index_file>`__). When invoking the
+(Section :ref:`Index_file <index_file>`). When invoking the
 ``scr_index`` command, the full path to the prefix directory and the
 name of the dataset directory are specified on the command line. The
 ``scr_index`` command is implemented in ``scr_index.c``, and its program
-flow is described in Section \ `[sec:scr_index] <#sec:scr_index>`__.
+flow is described in Section  :ref:`<scr_index>`.
 
 The ``scr_index`` command first acquires a listing of all items
 contained in the dataset directory by calling ``scr_read_dir``, which is
@@ -149,7 +149,7 @@ verifies the meta data from the rank filemap map against the original
 file (excluding CRC32 checks). If the file passes these checks, the
 command adds a corresponding entry for the file to the scan hash. This
 entry is formatted such that it can be used as an entry in the summary
-file hash (Section `[sec:summary_file] <#sec:summary_file>`__). If the
+file hash (Section :ref:`Summary file <summary_file>`). If the
 file is an ``XOR`` file, it sets a ``NOFETCH`` flag under the ``FILE``
 key, which instructs the SCR library to exclude this file during a fetch
 operation.
