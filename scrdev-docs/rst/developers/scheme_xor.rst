@@ -38,8 +38,7 @@ XOR algorithm
 ~~~~~~~~~~~~~
 
 The ``XOR`` redundancy scheme applies the algorithm described
-in :raw-latex:`\cite{Ross_providingefficient}` (which is based on
-RAID5 :raw-latex:`\cite{Patterson88acase}`). Assuming that each process
+in [Ross]_ (which is based on [RAID5]_). Assuming that each process
 writes one file and that the files on all processes are the same size,
 this algorithm is illustrated in Figure :ref:`1 <xor_fig>`. Given
 :math:`N` processes in the set, each file is logically partitioned into
@@ -287,3 +286,7 @@ Figure :ref:`xor_reduce`.
    :width: 12cm
 
    Pipelined XOR reduction to root
+
+.. [Ross] W. Gropp, R. Ross, and N. Miller, “Providing Efficient I/O Redundancy in MPI Environments,” in Lecture Notes in Computer Science, 3241:7786, September 2004. 11th European PVM/MPI Users Group Meeting, 2004.
+
+.. [RAID5] D. Patterson, G. Gibson, and R. Katz, “A Case for Redundant Arrays of Inexpensive Disks (RAID),” in Proc. of 1988 ACM SIGMOD Conf. on Management of Data, 1988.

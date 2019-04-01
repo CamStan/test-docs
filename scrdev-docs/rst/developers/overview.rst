@@ -402,8 +402,8 @@ The full path of the control directory is ``/tmp/user1/scr.1145655``.
 This is derived from the concatenation of the base directory (``/tmp``),
 the user name (``user1``), and the allocation id (``1145655``). SCR
 keeps files to persist its internal state in the control directory,
-including filemap files (Section :ref:`Filemap files <filemap_file>`) and the transfer
-file (Section :ref:`Transfer file <transfer_file>`).
+including filemap files (Section :ref:`Filemap files <filemap_file>`) and the
+transfer file (Section :ref:`Transfer file <transfer_file>`).
 
 Similarly, the cache directory is ``/ssd/user1/scr.1145655``, which is
 derived from the concatenation of the cache base directory (``/ssd``),
@@ -497,8 +497,10 @@ as a device and the device holding the copy do not fail simultaneously.
 With ``XOR``, SCR defines sets of processes where members within a set
 are selected from different failure groups. The processes within a set
 collectively compute XOR parity data which is stored in files along side
-the application checkpoint files. This scheme can withstand multiple failures
-so long as two processes from the same set do not fail simultaneously.
+the application checkpoint files. This algorithm is based on the work found
+in [Ross]_, which in turn was inspired by [RAID5]_. This scheme can withstand
+multiple failures so long as two processes from the same set do not fail
+simultaneously.
 
 Computationally, ``XOR`` is more expensive than ``Partner``, but it
 requires less storage space. Whereas ``Partner`` must store two full
@@ -714,3 +716,7 @@ MPI calls. It is written to be easily portable from one system to
 another. Code which is different from system to system should be
 abstracted behind a function and moved to ``scr_env.h/c``. This practice
 simplifies the task of porting SCR to new systems.
+
+.. [Ross] W. Gropp, R. Ross, and N. Miller, “Providing Efficient I/O Redundancy in MPI Environments,” in Lecture Notes in Computer Science, 3241:7786, September 2004. 11th European PVM/MPI Users Group Meeting, 2004.
+
+.. [RAID5] D. Patterson, G. Gibson, and R. Katz, “A Case for Redundant Arrays of Inexpensive Disks (RAID),” in Proc. of 1988 ACM SIGMOD Conf. on Management of Data, 1988.
