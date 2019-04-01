@@ -236,8 +236,7 @@ Section :ref:`Group descriptors <group_descriptors>`.
 The library creates two groups by default: ``NODE`` and ``WORLD``. The
 ``NODE`` group consists of all processes on the same compute node, and
 ``WORLD`` consists of all processes in the run. The user or system
-administrator can create additional groups via configuration files
-(Section :ref:`config`).
+administrator can create additional groups via configuration files.
 
 The SCR library must also track details about each class of storage it
 can access. For each available storage class, SCR needs to know the
@@ -257,8 +256,7 @@ The library creates one store descriptor by default: ``/tmp``. The
 assumption is made that ``/tmp`` is mounted as a local file system on
 each compute node. On Linux clusters, ``/tmp`` is often RAM disk or a
 local hard drive. Additional store descriptors can be defined by the
-user or system administrator in configuration files
-(Section :ref:`config`).
+user or system administrator in configuration files.
 
 Finally, SCR defines *redundancy descriptors* to associate a redundancy
 scheme with a class of storage and a group of processes that are likely
@@ -274,8 +272,7 @@ processes on the same node are likely to fail at the same time. It also
 assumes that checkpoints can be cached in ``/tmp``, which is assumed to
 be storage local to each compute node. It applies an ``XOR`` redundancy
 scheme using a group size of 8. Additional redundancy descriptors may be
-defined by the user or system administrator in configuration files
-(Section :ref:`config`).
+defined by the user or system administrator in configuration files.
 
 All of these descriptors (group, store, and redundancy) are defined by
 the system administrator or user in system or user configuration files.
