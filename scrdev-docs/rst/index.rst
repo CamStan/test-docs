@@ -23,6 +23,8 @@ Program Flow
     This section describes high-level program flow of various library routines
     and commands.
 
+-----
+
 The SCR library enables MPI applications to utilize distributed storage on
 Linux clusters to attain high file I/O bandwidth for checkpointing, restarting,
 and writing large datasets.
