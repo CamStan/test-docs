@@ -41,13 +41,15 @@ The ``XOR`` redundancy scheme applies the algorithm described
 in :raw-latex:`\cite{Ross_providingefficient}` (which is based on
 RAID5 :raw-latex:`\cite{Patterson88acase}`). Assuming that each process
 writes one file and that the files on all processes are the same size,
-this algorithm is illustrated in Figure \ `1 <#fig:xor>`__. Given
+this algorithm is illustrated in Figure :ref:`1 <xor_fig>`. Given
 :math:`N` processes in the set, each file is logically partitioned into
 :math:`N-1` chunks, and an empty, zero-padded chunk is logically
 inserted into the file at alternating positions depending on the rank of
 the process. Then a reduce-scatter is computed across the set of logical
 files. The resulting chunk from this reduce-scatter is the data that the
 process stores in its ``XOR`` file.
+
+.. _xor_fig:
 
 .. figure:: fig/xor.png
    :alt: XOR reduce-scatter
@@ -58,7 +60,7 @@ process stores in its ``XOR`` file.
 
 In general, different processes may write different numbers of files,
 and file sizes may be arbitrary. In
-Figure \ `[fig:xor_general] <#fig:xor_general>`__, we illustrate how to
+Figure :ref:`xor_general`, we illustrate how to
 extend the algorithm for the general case. First, we logically
 concatenate all of the files a process writes into a single file. We
 then compute the minimum chunk size such that :math:`N-1` chunks are
@@ -67,13 +69,13 @@ end of each logical file with zeros, such that each logical file extends
 to the number of bytes contained in :math:`N-1` chunks. This extension
 is efficient when all processes write about the same amount of data.
 
+.. _xor_general:
+
 .. figure:: fig/xor_general.png
    :alt: Extension to multiple files
    :width: 12cm
 
    Extension to multiple files
-
-[fig:xor_general]
 
 In practice, to read from this logical file, we first open each physical
 file, and then we call ``scr_read_pad_n()``. As input, this function
@@ -112,17 +114,17 @@ Then, in the second phase, we compute the reduce-scatter result for the
 second piece of all chunks, and so on. In each phase, the reduce-scatter
 computation is pipelined among the processes. The first phase of this
 reduce-scatter algorithm is illustrated in
-Figure \ `[fig:reduce_scatter] <#fig:reduce_scatter>`__. This algorithm
+Figure :ref:`reduce_scatter`. This algorithm
 is implemented in ``scr_reddesc_apply_xor()`` in
 ``scr_reddesc_apply.c``.
+
+.. _reduce_scatter:
 
 .. figure:: fig/reduce_scatter.png
    :alt: XOR reduce-scatter implementation
    :width: 12cm
 
    XOR reduce-scatter implementation
-
-[fig:reduce_scatter]
 
 XOR file
 ~~~~~~~~
@@ -276,12 +278,12 @@ implementation attempts to distribute work evenly among all processes,
 minimize network contention, and minimize file accesses. This algorithm
 is implemented in ``scr_reddesc_recover_xor()`` in
 ``scr_reddesc_recover.c``. An example is illustrated in
-Figure \ `[fig:xor_reduce] <#fig:xor_reduce>`__.
+Figure :ref:`xor_reduce`.
+
+.. _xor_reduce:
 
 .. figure:: fig/xor_reduce.png
    :alt: Pipelined XOR reduction to root
    :width: 12cm
 
    Pipelined XOR reduction to root
-
-[fig:xor_reduce]

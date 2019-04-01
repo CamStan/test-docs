@@ -640,10 +640,8 @@ ALL
 #. Allocate buffers to send and receive data during reduction.
 
 #. Execute pipelined ``XOR`` reduction to root to reconstruct missing
-   data as illustrated in
-   Figure \ `[fig:xor_reduce] <#fig:xor_reduce>`__. For a full
-   description of the redundancy scheme, see
-   Section :ref:`XOR algorithm <raid>`.
+   data as illustrated in Figure :ref:`xor_reduce`. For a full description of
+   the redundancy scheme, see Section :ref:`XOR algorithm <raid>`.
 
 #. Close our ``XOR`` file.
 
