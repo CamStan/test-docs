@@ -381,8 +381,7 @@ Example of SCR files and directories
 ------------------------------------
 
 To illustrate how various files and directories are arranged in SCR,
-consider the example shown in
-Figure \ `[fig:directories_wide] <#fig:directories_wide>`__. In this
+consider the example shown in Figure :ref:`directories_wide`. In this
 example, a user named “``user1``” runs a 4-task MPI job with one task
 per compute node. The base directory for the control directory is
 ``/tmp``, the base directory for the cache directory is ``/ssd``, and
@@ -390,13 +389,13 @@ the prefix directory is ``/p/lscratchb/user1/simulation123``. The
 control and cache directories are storage devices local to the compute
 node.
 
+.. _directories_wide:
+
 .. figure:: fig/directories_wide.png
    :alt: Example of SCR Directories
    :width: 12cm
 
    Example of SCR Directories
-
-[fig:directories_wide]
 
 The full path of the control directory is ``/tmp/user1/scr.1145655``.
 This is derived from the concatenation of the base directory (``/tmp``),
@@ -497,11 +496,8 @@ as a device and the device holding the copy do not fail simultaneously.
 With ``XOR``, SCR defines sets of processes where members within a set
 are selected from different failure groups. The processes within a set
 collectively compute XOR parity data which is stored in files along side
-the application checkpoint files. This algorithm is based on the work
-found in :raw-latex:`\cite{Ross_providingefficient}`, which in turn was
-inspired by RAID5 :raw-latex:`\cite{Patterson88acase}`. This scheme can
-withstand multiple failures so long as two processes from the same set
-do not fail simultaneously.
+the application checkpoint files. This scheme can withstand multiple failures
+so long as two processes from the same set do not fail simultaneously.
 
 Computationally, ``XOR`` is more expensive than ``Partner``, but it
 requires less storage space. Whereas ``Partner`` must store two full
