@@ -1,15 +1,23 @@
-*************
+=============
 Testing Guide
-*************
-
-Implementing Tests
-==================
+=============
 
 We can never have enough testing. Any additional tests you can write are always
 greatly appreciated.
 
+----------
+Unit Tests
+----------
+
+Implementing Tests
+******************
+
+The UnifyCR Test Suite uses the `Test Anything Protocol`_ (TAP) and the
+Automake test harness. This test suite has two types of TAP tests (shell scripts
+and C) to allow for testing multiple aspects of UnifyCR.
+
 Shell Script Tests
-------------------
+^^^^^^^^^^^^^^^^^^
 
 Test cases in shell scripts are implemented with sharness_, which is included
 in the UnifyCR source distribution. See the file sharness.sh_ for all available
@@ -52,7 +60,7 @@ Here is an example of a sharness test:
 .. _C-tests-label:
 
 C Program Tests
----------------
+^^^^^^^^^^^^^^^
 
 C programs use the `libtap library`_ to implement test cases. Convenience
 functions common to test cases written in C are implemented in the library
@@ -94,7 +102,7 @@ Here is an example libtap test:
 ------------
 
 Adding Tests
-============
+************
 
 The UnifyCR Test Suite uses the `Test Anything Protocol`_ (TAP) and the
 Automake test harness. By convention, test scripts and programs that output
@@ -106,7 +114,7 @@ To add a new test case to the test harness, follow the existing examples in
 so that it gets included in the source distribution tarball.
 
 Test Suites
------------
+^^^^^^^^^^^
 
 If multiple tests fit within the same category (i.e., tests for creat and mkdir
 both fall under tests for sysio) then create a test suite to run those tests.
@@ -158,7 +166,7 @@ sysio_suite in `t/Makefile.am`_ and `t/sys/sysio_suite.c`_:
       wrappers, add a suite and flags for both a gotcha and a static build)
 
 Test Cases
-----------
+^^^^^^^^^^
 
 For testing C code, test cases are written using the `libtap library`_. See the
 :ref:`C Program Tests <C-tests-label>` section above on how to write these
@@ -185,7 +193,7 @@ in (i.e., testing a wrapper that doesn't have any tests yet):
 ------------
 
 Running the Tests
-=================
+*****************
 
 To manually run the UnifyCR test suite, simply run ``make check`` from your
 build/t directory. If changes are made to existing files in the test suite, the
@@ -218,7 +226,7 @@ pull request is created or updated. All pull requests must pass these tests
 before they will be accepted.
 
 Interpreting the Results
-------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. sidebar:: TAP Output
 
@@ -282,13 +290,90 @@ ERROR
     ERROR.
 
 Running the Examples
---------------------
+^^^^^^^^^^^^^^^^^^^^
+
+To run any of these examples manually, refer to the :doc:`examples`
+documentation.
 
 The UnifyCR examples_ are also being used as integration tests with
 continuation integration tools such as Bamboo_ or GitLab_.
 
+------------
+
+-----------------
+Integration Tests
+-----------------
+
+The UnifyCR examples_ are being used as integration tests with continuation
+integration tools such as Bamboo_ or GitLab_.
+
 To run any of these examples manually, refer to the :doc:`examples`
 documentation.
+
+Running the Tests
+*****************
+
+UnifyCR's integration tests are primarly set up to be run all as one suite.
+However, they can be run individually if desired.
+
+The testing scripts in `t/ci`_ depend on sharness_, which is setup up in the
+containing `t/` directory. These tests will not function properly if moved or if
+they cannot find the sharness files.
+
+.. important::
+
+    Whether running all tests or individual tests, first make sure you have
+    either interactively allocated nodes or are submitting a batch job to run
+    them.
+
+.. note::
+
+    UnifyCR's integration test suite requires MPI and currenty only supports
+    `srun` and `jsrun` MPI launch commands. Changes are coming to suppot
+    additional ones.
+
+Running All Tests
+^^^^^^^^^^^^^^^^^
+
+To run all of the tests, simply run `./RUN_CI_TESTS.sh`.
+
+.. code-block:: BASH
+    $ ./RUN_CI_TESTS.sh
+
+or
+
+.. code-block:: BASH
+    $ prove -v RUN_CI_TESTS.sh
+
+Running Individual Tests
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+In order to run individual tests, testing functions and variables will need to
+be set up and the UnifyCR server needs to be started. To do this, first source
+the `001-setup.sh` script followed by `002-start-server.sh`. Then source each
+desired test script after that preceded by `$CI_DIR`. When finished, source the
+`990-stop-server.sh` script last to stop the server and clean up.
+
+.. code-block:: BASH
+
+    $ . full/path/to/001-setup.sh
+    $ . $CI_DIR/002-start-server.sh
+    $ . $CI_DIR/100-writeread-tests.sh
+    $ . $CI_DIR/990-stop-server.sh
+
+Configuration Variables
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Adding New Tests
+****************
+
+If additional tests are desired, create a script after the fashion of
+100-writeread-tests.sh where the prefixed number indicates the desired order
+for running the tests. Then source that script in this script below, in the
+desired order.
+
+Helper Functions
+^^^^^^^^^^^^^^^^
 
 .. explicit external hyperlink targets
 
@@ -297,12 +382,13 @@ documentation.
 .. _examples: https://github.com/LLNL/UnifyCR/tree/dev/examples/src
 .. _libtap library: https://github.com/zorgnax/libtap
 .. _lib/testutil.c: https://github.com/LLNL/UnifyCR/blob/dev/t/lib/testutil.c
-.. _t/Makefile.am: https://github.com/LLNL/UnifyCR/blob/dev/t/Makefile.am
-.. _t/sys/sysio_suite.c: https://github.com/LLNL/UnifyCR/blob/dev/t/sys/sysio_suite.c
-.. _Test Anything Protocol: https://testanything.org
-.. _Travis CI: https://docs.travis-ci.com
 .. _sharness: https://github.com/chriscool/sharness
 .. _sharness.d: https://github.com/LLNL/UnifyCR/tree/dev/t/sharness.d
 .. _sharness.d/00-test-env.sh: https://github.com/LLNL/UnifyCR/blob/dev/t/sharness.d/00-test-env.sh
 .. _sharness.d/01-unifycr-settings.sh: https://github.com/LLNL/UnifyCR/blob/dev/t/sharness.d/01-unifycr-settings.sh
 .. _sharness.sh: https://github.com/LLNL/UnifyCR/blob/dev/t/sharness.sh
+.. _t/ci: https://github.com/LLNL/UnifyCR/blob/dev/t
+.. _t/Makefile.am: https://github.com/LLNL/UnifyCR/blob/dev/t/Makefile.am
+.. _t/sys/sysio_suite.c: https://github.com/LLNL/UnifyCR/blob/dev/t/sys/sysio_suite.c
+.. _Test Anything Protocol: https://testanything.org
+.. _Travis CI: https://docs.travis-ci.com
