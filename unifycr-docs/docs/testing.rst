@@ -317,7 +317,7 @@ Running the Tests
 
 .. attention::
 
-    UnifyCR's integration test suite requires MPI and currenty only supports
+    UnifyCR's integration test suite requires MPI and currently only supports
     ``srun`` and ``jsrun`` MPI launch commands. Changes are coming to support
     ``mpirun``.
 
@@ -478,16 +478,16 @@ stopped and deleting any files created by UnifyCR or its dependencies. Set
 USAGE: ``CI_CLEANUP=yes|YES|no|NO``
 
 Setting this to ``no|NO`` sets both ``$CI_LOG_CLEANUP`` and ``$CI_HOST_CLEANUP``
-to ``no|NO``. This envar defaults to ``yes``.
+to ``no|NO``.
 
 ``CI_TEMP_PATH``
 """"""""""""""""
 
 USAGE: ``CI_TEMP_PATH=/path/for/temporary/files/created/by/UnifyCR``
 
-Can be used as a shortcut to set ``UNIFYCR_RUNSTATE_DIR``,
-``UNIFYCR_META_DB_PATH``, and ``UNIFYCR_SHAREDFS_DIR`` all to the same path.
-This envar defaults to ``CI_TEMP_PATH=${TMPDIR}/unifycr.${USER}.${JOB_ID}``.
+Can be used as a shortcut to set ``UNIFYCR_RUNSTATE_DIR`` and
+``UNIFYCR_META_DB_PATH`` to the same path.  This envar defaults to
+``CI_TEMP_PATH=${TMPDIR}/unifycr.${USER}.${JOB_ID}``.
 
 ``CI_STORAGE_PATH``
 """""""""""""""""""
@@ -518,9 +518,11 @@ An example of testing a posix example can be see :ref:`below <posix-ex-label>`.
 
 .. note::
 
-    The envar ``CI_POSIX_MP`` is set up automatically, but can be set before
-    running the integration tests as well. If setting this, ensure that it's a
-    location that exists on the allocated nodes where the tests will be run.
+    The the posix mountpoint envar, ``CI_POSIX_MP``, is set up inside
+    ``$SHARNESS_TRASH_DIRECTORY`` automatically and cleaned up afterwards.
+    However, this envar can be set before running the integration tests as well.
+    If setting this, ensure that it is a shared file system that all allocated
+    nodes can see.
 
 ------------
 
@@ -545,20 +547,20 @@ default arguments as well as any default arguments wanted by all examples. See
 
 .. _helper-label:
 
-Helper Functions
-^^^^^^^^^^^^^^^^
+Example Helper Functions
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 There are helper functions available in `t/ci/ci-functions.sh`_ that can make
-adding new tests much easier.  These may get adjusted over time to accommodate
-other examples, or additional functions may need to be written. Some of the main
-helper functions that might be useful for testing examples are:
+running and testing the examples much easier. These may get adjusted over time
+to accommodate other examples, or additional functions may need to be written.
+Some of the main helper functions that might be useful for running examples are:
 
 .. _unify-run-test-label:
 
 ``unify_run_test()``
 """"""""""""""""""""
 
-USAGE: ``unify_run_test $app_name "$app_args" [output_variable_name]``
+USAGE: ``unify_run_test app_name "app_args" [output_variable_name]``
 
 Given a example application name and application args, this function runs the
 example with the appropriate MPI runner and args. This function is meant to make
@@ -622,7 +624,7 @@ The results can then be tested with sharness_:
 ``get_filename()``
 """"""""""""""""""
 
-USAGE: ``get_filename $app_name $app_args [app_suffix]``
+USAGE: ``get_filename app_name app_args [app_suffix]``
 
 Builds and returns the filename for an example so that if it shows up in the
 ``$UNIFYCR_MOUNTPOINT`` (when using an existing mountpoint), it can be tracked
@@ -660,7 +662,7 @@ For example:
     runmode=posix
 
     app_name=${basetest}-${runmode}
-    app_args="-p n1 -n32 -c $((16 * $KB)) -b $MB
+    app_args="-p nn -n32 -c $((16 * $KB)) -b $MB
 
     unify_run_test $app_name "$app_args" app_output
     rc=$?
@@ -670,12 +672,124 @@ For example:
     test_expect_success POSIX "$app_name $app_args: (line_count=$line_count, rc=$rc)" '
         test $rc = 0 &&
         test $line_count = 8 &&
-        test_path_is_file ${CI_POSIX_MP}/$filename
+        test_path_has_file_per_process $CI_POSIX_MP $filename
+    '
+
+Sharness Helper Functions
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+There are also additional sharness functions for testing the examples available
+when `t/ci/ci-functions.sh`_ is sourced. These are to be used with sharness_ for
+testing the results of running the examples with or without using the
+:ref:`Example Helper Functions <helper-label>`.
+
+``process_is_running()``
+""""""""""""""""""""""""
+
+USAGE: ``process_is_running process_name seconds_before_giving_up``
+
+Checks if a process with the given name is running on every host, retrying up to
+a given number of seconds before giving up. This function overrides the
+``process_is_running()`` function used by the UnifyCR unit tests. The primary
+difference being that this function checks for the process on every host.
+
+Expects two arguments:
+
+- $1 - Name of a process to check for
+- $2 - Number of seconds to wait before giving up
+
+.. code-block:: BASH
+    :emphasize-lines:
+
+    test_expect_success "unifycrd is running" '
+        process_is_running unifycrd 5
+    '
+
+``process_is_not_running()``
+""""""""""""""""""""""""""""
+
+USAGE: ``process_is_not_running process_name seconds_before_giving_up``
+
+Checks if a process with the given name is not running on every host, retrying
+up to a given number of seconds before giving up. This function overrides the
+``process_is_not_running()`` function used by the UnifyCR unit tests. The primary
+difference being that this function checks that the process is not running on
+every host.
+
+Expects two arguments:
+
+- $1 - Name of a process to check for
+- $2 - Number of seconds to wait before giving up
+
+.. code-block:: BASH
+
+    test_expect_success "unifycrd is running" '
+        process_is_running unifycrd 5
+    '
+
+``test_path_is_dir()``
+""""""""""""""""""""""
+
+USAGE: ``test_path_is_dir dir_name [optional diagnosis info]``
+
+Checks that a directory with the given name exists and is accessible from each
+host. Does NOT need to be a shared directory. This function overrides the
+``test_path_is_dir()`` function in sharness.sh_, the primary difference being
+that this function checks for the dir on every host in the allocation.
+
+Takes once argument with an optional second:
+
+- $1 - Path of the directory to check for
+- $2 - Can be given to provide a more precise diagnosis
+
+.. code-block:: BASH
+
+    test_expect_success "$dir_name is an existing directory" '
+        test_path_is_dir $dir_name
+    '
+
+``test_path_is_shared_dir()``
+"""""""""""""""""""""""""""""
+
+USAGE: ``test_path_is_shared_dir dir_name [optional diagnosis info]``
+
+Check if same directory (actual directory, not just name) exists and is
+accessible from each host.
+
+Takes once argument with an optional second:
+
+- $1 - Path of the directory to check for
+- $2 - Can be given to provide a more precise diagnosis
+
+.. code-block:: BASH
+
+    test_expect_success "$dir_name is a shared directory" '
+        test_path_is_shared_dir $dir_name
+    '
+
+``test_path_has_file_per_process()``
+""""""""""""""""""""""""""""""""""""
+
+USAGE: ``test_path_has_file_per_process shared_dir_path file_name [optional diagnosis info]``
+
+Check if the provided directory path contains a file-per-process of the provided
+file name. Assumes the directory is a shared directory.
+
+Takes two arguements with an optional third:
+
+- $1 - Path of the shared directory to check for the files
+- $2 - File name without the appended process number
+- $3 - Can be given to provided a more precise diagnosis
+
+.. code-block:: BASH
+
+    test_expect_success "$dir_name has file-per-process of $file_name" '
+        test_path_has_file_per_process $dir_name $file_name
     '
 
 There are other helper functions available as well, most of which are being used
 by the test suite itself. Details on these functions can be found in their
-comments in `t/ci/ci-functions.sh`_ and `t/sharness.d/02-functions.sh`_.
+comments in `t/ci/ci-functions.sh`_.
 
 .. explicit external hyperlink targets
 
@@ -697,6 +811,5 @@ comments in `t/ci/ci-functions.sh`_ and `t/sharness.d/02-functions.sh`_.
 .. _t/ci/100-writeread-tests.sh: https://github.com/LLNL/UnifyCR/blob/dev/t/ci/100-writeread-tests.sh
 .. _t/ci/ci-functions.sh: https://github.com/LLNL/UnifyCR/blob/dev/t/ci/ci-functions.sh
 .. _t/ci/RUN_CI_TESTS.sh: https://github.com/LLNL/UnifyCR/blob/dev/t/ci/RUN_CI_TESTS.sh
-.. _t/sharness.d/02-functions.sh: https://github.com/LLNL/UnifyCR/blob/dev/t/sharness.d/02-functions.sh
 .. _Test Anything Protocol: https://testanything.org
 .. _Travis CI: https://docs.travis-ci.com
