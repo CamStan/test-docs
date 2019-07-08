@@ -723,14 +723,14 @@ Expects two arguments:
 
 .. code-block:: BASH
 
-    test_expect_success "unifycrd is running" '
-        process_is_running unifycrd 5
+    test_expect_success "unifycrd is not running" '
+        process_is_not_running unifycrd 5
     '
 
 ``test_path_is_dir()``
 """"""""""""""""""""""
 
-USAGE: ``test_path_is_dir dir_name [optional diagnosis info]``
+USAGE: ``test_path_is_dir dir_name [optional]``
 
 Checks that a directory with the given name exists and is accessible from each
 host. Does NOT need to be a shared directory. This function overrides the
@@ -751,7 +751,7 @@ Takes once argument with an optional second:
 ``test_path_is_shared_dir()``
 """""""""""""""""""""""""""""
 
-USAGE: ``test_path_is_shared_dir dir_name [optional diagnosis info]``
+USAGE: ``test_path_is_shared_dir dir_name [optional]``
 
 Check if same directory (actual directory, not just name) exists and is
 accessible from each host.
@@ -770,7 +770,7 @@ Takes once argument with an optional second:
 ``test_path_has_file_per_process()``
 """"""""""""""""""""""""""""""""""""
 
-USAGE: ``test_path_has_file_per_process shared_dir_path file_name [optional diagnosis info]``
+USAGE: ``test_path_has_file_per_process shared_dir_path file_name [optional]``
 
 Check if the provided directory path contains a file-per-process of the provided
 file name. Assumes the directory is a shared directory.
