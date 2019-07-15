@@ -604,7 +604,7 @@ output produced by running the example.
 The results can then be tested with sharness_:
 
 .. code-block:: BASH
-    :emphasize-lines: 11-14
+    :emphasize-lines: 7,11-14
 
     basetest=writeread
     runmode=static
@@ -770,7 +770,7 @@ Takes once argument with an optional second:
 ``test_path_has_file_per_process()``
 """"""""""""""""""""""""""""""""""""
 
-USAGE: ``test_path_has_file_per_process shared_dir_path file_name [optional]``
+USAGE: ``test_path_has_file_per_process dir_path file_name [optional]``
 
 Check if the provided directory path contains a file-per-process of the provided
 file name. Assumes the directory is a shared directory.
