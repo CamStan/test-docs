@@ -2,22 +2,23 @@
 UnifyFS Dependencies
 ====================
 
-`GOTCHA <https://github.com/LLNL/GOTCHA/releases>`_ version 0.0.2 
+- `GOTCHA <https://github.com/LLNL/GOTCHA/releases>`_ version 0.0.2 
 (compatibility with latest release in progress)
 
-`leveldb <https://github.com/google/leveldb/releases/tag/1.22>`_ version 1.22
+- `leveldb <https://github.com/google/leveldb/releases/tag/1.22>`_ version 1.22
 
-`flatcc
+- `flatcc
 <https://github.com/dvidelabs/flatc://github.com/dvidelabs/flatcc/releases/tag/v0.5.3>`_
 version 0.5.3
 
-`Margo <https://xgitlab.cels.anl.gov/sds/margo>`_ version 0.4.3 and its dependencies:
-- `Argobots <https://github.com/pmodels/argobots/releases/tag/v1.0rc1>`_ version
+- `Margo <https://xgitlab.cels.anl.gov/sds/margo>`_ version 0.4.3 and its dependencies:
+
+  - `Argobots <https://github.com/pmodels/argobots/releases/tag/v1.0rc1>`_ version
   1.0rc1
-- `Mercury <https://github.com/mercury-hpc/mercury/releases/tag/v1.0.1>`_
+  - `Mercury <https://github.com/mercury-hpc/mercury/releases/tag/v1.0.1>`_
   version 1.0.1
 
-  - `bmi <https://xgitlab.cels.anl.gov/sds/bmi.git>`_
+    - `bmi <https://xgitlab.cels.anl.gov/sds/bmi.git>`_
 
 .. important::
 
