@@ -14,6 +14,13 @@ certain settings have command line options. When defined via multiple methods,
 the command line options have the highest priority, followed by environment
 variables, and finally config file options from ``unifyfs.conf``.
 
+The system-wide configuration file is used by default when available.
+However, users can specify a custom location for the configuration file using
+the ``-f`` command-line option to ``unifyfsd`` (see below).
+There is a sample ``unifyfs.conf`` file in the installation directory
+under ``etc/unifyfs/``. This file is also available in the ``extras`` directory
+in the source repository.
+
 The unified method for providing configuration control is adapted from
 CONFIGURATOR_. Configuration settings are grouped within named sections, and
 each setting consists of a key-value pair with one of the following types:
@@ -56,11 +63,19 @@ a given section and key.
 .. table:: ``[client]`` section - client settings
    :widths: auto
 
-   =============  ======  =====================================================
-   Key            Type    Description
-   =============  ======  =====================================================
-   max_files      INT     maximum number of open files per client process
-   =============  ======  =====================================================
+   ==============  ======  =================================================================
+   Key             Type    Description
+   ==============  ======  =================================================================
+   max_files       INT     maximum number of open files per client process
+   flatten_writes  BOOL    enable flattening writes (optimization for overwrite-heavy codes)
+   local_extents   BOOL    service reads from local data if possible (default: off)
+   ==============  ======  =================================================================
+
+Enabling the ``local_extents`` optimization may significantly improve read
+performance.  However, it should not be used by applications
+in which different processes write to a given byte offset within
+the file, nor should it be used with applications that truncate
+files.
 
 .. table:: ``[log]`` section - logging settings
    :widths: auto
@@ -157,6 +172,10 @@ For server command line options, we use ``getopt_long()`` format. Thus, all
 command line options have long and short forms. The long form uses
 ``--section-key=value``, while the short form ``-<optchar> value``, where
 the short option character is given in the below table.
+
+Note that for configuration options of type BOOL, the value is optional.
+When not provided, the ``true`` value is assumed. If the short form option
+is used, the value must immediately follow the option character (e.g., ``-Cyes``).
 
 .. table:: ``unifyfsd`` command line options
    :widths: auto
