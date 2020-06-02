@@ -105,15 +105,17 @@ Documentation
 Here is our current documentation of how the internals of UnifyFS function for
 several basic operations.
 
-.. rubric:: UnifyFS Developer's Documentation
+.. container:: leftside
 
-.. image:: images/UnifyFS-developers-documentation.png
-   :target: slides/UnifyFS-developers-documentation.pdf
-   :height: 72px
-   :align: left
-   :alt: UnifyFS Developer's Documentation
+    .. rubric:: UnifyFS Developer's Documentation
 
-:download:`Download slides <slides/UnifyFS-developers-documentation.pdf>`.
+    .. image:: images/UnifyFS-developers-documentation.png
+       :target: slides/UnifyFS-developers-documentation.pdf
+       :height: 72px
+       :align: left
+       :alt: UnifyFS Developer's Documentation
+
+    :download:`Download slides <slides/UnifyFS-developers-documentation.pdf>`.
 
 As UnifyFS is continually improved and updated, it is easy for documentation to
 become out-of-date. Any contributions to the documentation, no matter how
