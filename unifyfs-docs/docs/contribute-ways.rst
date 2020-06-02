@@ -117,8 +117,6 @@ several basic operations.
 
 |
 
-    .. Empty container to clear floating image
-
 As UnifyFS is continually improved and updated, it is easy for documentation to
 become out-of-date. Any contributions to the documentation, no matter how
 small, is always greatly appreciated. If you are not in a position to update
