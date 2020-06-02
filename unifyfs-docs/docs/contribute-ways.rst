@@ -106,6 +106,7 @@ Here is our current documentation of how the internals of UnifyFS function for
 several basic operations.
 
 .. container::
+
     .. rubric:: UnifyFS Developer's Documentation
     .. image:: images/UnifyFS-developers-documentation.png
        :target: slides/UnifyFS-developers-documentation.pdf
