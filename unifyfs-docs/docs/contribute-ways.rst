@@ -106,6 +106,7 @@ Here is our current documentation of how the internals of UnifyFS function for
 several basic operations.
 
 .. rubric:: UnifyFS Developer's Documentation
+
 .. image:: images/UnifyFS-developers-documentation.png
    :target: slides/UnifyFS-developers-documentation.pdf
    :height: 72px
@@ -114,7 +115,7 @@ several basic operations.
 
 :download:`Download slides <slides/UnifyFS-developers-documentation.pdf>`.
 
-.. container:: clear
+|
 
     .. Empty container to clear floating image
 
