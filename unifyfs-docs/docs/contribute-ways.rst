@@ -114,7 +114,7 @@ several basic operations.
 
 :download:`Download slides <slides/UnifyFS-developers-documentation.pdf>`.
 
-.. container:: clearer
+.. container:: clear
 
     .. Empty container to clear floating image
 
