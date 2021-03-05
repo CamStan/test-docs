@@ -55,6 +55,7 @@ build is desired. Run ``spack info unifyfs`` for more info.
 
    ==========  ==========================  =======  ===========================
       Variant  Command                     Default  Description
+
                (spack install <package>)
    ==========  ==========================  =======  ===========================
    Auto-mount  ``unifyfs+auto-mount``      True     Enable transparent mounting
