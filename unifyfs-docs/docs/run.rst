@@ -1,11 +1,11 @@
 ================================
-  Starting & Stopping in a Job
+Run UnifyFS
 ================================
 
-In this section, we describe the mechanisms for starting and stopping UnifyFS in
-a user's job allocation.
+This section describes the mechanisms to start and stop the UnifyFS
+server processes within a job allocation.
 
-Overall, the steps taken to run an application with UnifyFS include:
+Overall, the steps to run an application with UnifyFS include:
 
     1. Allocate nodes using the system resource manager (i.e., start a job)
 
@@ -18,22 +18,22 @@ Overall, the steps taken to run an application with UnifyFS include:
     5. Terminate the UnifyFS servers using ``unifyfs``
 
 --------------------
-  Starting UnifyFS
+  Start UnifyFS
 --------------------
 
-First, we need to start the UnifyFS server daemon (``unifyfsd``) on the nodes in
+First, one must start the UnifyFS server process (``unifyfsd``) on the nodes in
 the job allocation. UnifyFS provides the ``unifyfs`` command line utility to
 simplify this action on systems with supported resource managers. The easiest
 way to determine if you are using a supported system is to run
 ``unifyfs start`` within an interactive job allocation. If no compatible
-resource management system is detected, the utility will report an error message
+resource management system is detected, the utility reports an error message
 to that effect.
 
 In ``start`` mode, the ``unifyfs`` utility automatically detects the allocated
 nodes and launches a server on each node. For example, the following script
 could be used to launch the ``unifyfsd`` servers with a customized
 configuration. On systems with resource managers that propagate environment
-settings to compute nodes, the environment variables will override any
+settings to compute nodes, the environment variables override any
 settings in ``/etc/unifyfs/unifyfs.conf``. See :doc:`configuration`
 for further details on customizing the UnifyFS runtime configuration.
 
@@ -50,6 +50,7 @@ for further details on customizing the UnifyFS runtime configuration.
 
     unifyfs start --share-dir=/path/to/shared/file/system
 
+.. _unifyfs_utility_label:
 
 ``unifyfs`` provides command-line options to choose the client mountpoint,
 adjust the consistency model, and control stage-in and stage-out of files.
@@ -88,11 +89,11 @@ The full usage for ``unifyfs`` is as follows:
 After UnifyFS servers have been successfully started, you may run your
 UnifyFS-enabled applications as you normally would (e.g., using mpirun).
 Only applications that explicitly call ``unifyfs_mount()`` and access files
-with the specified mountpoint prefix will utilize UnifyFS for their I/O. All
+under the specified mountpoint prefix will utilize UnifyFS for their I/O. All
 other applications will operate unchanged.
 
 --------------------
-  Stopping UnifyFS
+  Stop UnifyFS
 --------------------
 
 After all UnifyFS-enabled applications have completed running, you should
@@ -116,3 +117,29 @@ with a README documenting the installation instructions, is available
 within the source repository at ``util/scripts/lsfcsm``.
 
 Support for the SLURM resource manager is under development.
+
+-----------------------------------------------
+  Stage-in and Stage-out Manifest File Format
+-----------------------------------------------
+
+The manifest file contains one or more file copy requests.
+Each line in the manifest corresponds to one file copy request,
+and it contains both the source and destination file paths. Currently,
+directory copies are not supported.
+
+Each line is formatted as: ``<source filename> <whitespace> <destination filename>``.
+If either of the filenames
+contain whitespace or special characters, then both filenames should
+be surrounded by double-quote characters (") (ASCII character 34 decimal).
+The double-quote character and the linefeed end-of-line character are forbidden
+in any filenames used in a unifyfs manifest file, but any other
+characters are allowed, including control characters.
+If a filename contains any characters that might be misinterpreted, then
+enclosing the filename in double-quotes is always
+a safe thing to do.
+
+Here is an example of a valid stage-in manifest file:
+
+``/scratch/users/me/input_data/input_1.dat /unifyfs/input/input_1.dat``
+``/home/users/me/configuration/run_12345.conf /unifyfs/config/run_12345.conf``
+``"/home/users/me/file with space.dat" "/unifyfs/file with space.dat"``

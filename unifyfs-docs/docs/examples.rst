@@ -3,8 +3,9 @@ Examples
 ********
 
 There are several examples_ available on ways to use UnifyFS. These examples
-build into static and GOTCHA versions (pure POSIX versions coming soon) and are
-also used as a form of :doc:`intregraton testing <testing>`.
+build into static, GOTCHA, and pure POSIX (not linked with UnifyFS) versions
+depending on how they are linked. Several of the example programs are also used
+in the UnifyFS :doc:`intregraton testing <testing>`.
 
 Examples Locations
 ==================
@@ -36,7 +37,7 @@ Installed with Autotools
 
 The autotools installation of UnifyFS will place the example programs in the
 *libexec/* directory of the path provided to ``--prefix=/path/to/install`` during
-the configure step of :doc:`building and installing <build-intercept>`.
+the configure step of :doc:`building and installing <build>`.
 
 Build Location
 --------------
@@ -83,7 +84,7 @@ Running the Examples
 
 In order to run any of the example programs you first need to start the UnifyFS
 server daemon on the nodes in the job allocation. To do this, see
-:doc:`start-stop`.
+:doc:`run`.
 
 Each example takes multiple arguments and so each has its own ``--help`` option
 to aid in this process.
@@ -95,50 +96,99 @@ to aid in this process.
     Usage: write-static [options...]
 
     Available options:
-     -a, --appid=<id>          use given application id
-                               (default: 0)
-     -A, --aio                 use asynchronous I/O instead of read|write
-                               (default: off)
-     -b, --blocksize=<bytes>   I/O block size
-                               (default: 16 MiB)
-     -c, --chunksize=<bytes>   I/O chunk size for each operation
-                               (default: 1 MiB)
-     -d, --debug               for debugging, wait for input (at rank 0) at start
-                               (default: off)
-     -f, --file=<filename>     target file name (or path) under mountpoint
-                               (default: 'testfile')
-     -k, --check               check data contents upon read
-                               (default: off)
-     -L, --listio              use lio_listio instead of read|write
-                               (default: off)
-     -m, --mount=<mountpoint>  use <mountpoint> for unifyfs
-                               (default: /unifyfs)
-     -M, --mpiio               use MPI-IO instead of POSIX I/O
-                               (default: off)
-     -n, --nblocks=<count>     count of blocks each process will read|write
-                               (default: 32)
-     -N, --mapio               use mmap instead of read|write
-                               (default: off)
-     -p, --pattern=<pattern>   'n1' (N-to-1 shared file) or 'nn' (N-to-N file per process)
-                               (default: 'n1')
-     -P, --prdwr               use pread|pwrite instead of read|write
-                               (default: off)
-     -S, --stdio               use fread|fwrite instead of read|write
-                               (default: off)
-     -U, --disable-unifyfs     do not use UnifyFS
-                               (default: enable UnifyFS)
-     -v, --verbose             print verbose information
-                               (default: off)
-     -V, --vecio               use readv|writev instead of read|write
-                               (default: off)
-     -x, --shuffle             read different data than written
-                               (default: off)
+     -a, --appid=<id>            use given application id
+                                 (default: 0)
+     -A, --aio                   use asynchronous I/O instead of read|write
+                                 (default: off)
+     -b, --blocksize=<bytes>     I/O block size
+                                 (default: 16 MiB)
+     -c, --chunksize=<bytes>     I/O chunk size for each operation
+                                 (default: 1 MiB)
+     -d, --debug                 for debugging, wait for input (at rank 0) at start
+                                 (default: off)
+     -f, --file=<filename>       target file name (or path) under mountpoint
+                                 (default: 'testfile')
+     -k, --check                 check data contents upon read
+                                 (default: off)
+     -L, --listio                use lio_listio instead of read|write
+                                 (default: off)
+     -m, --mount=<mountpoint>    use <mountpoint> for unifyfs
+                                 (default: /unifyfs)
+     -M, --mpiio                 use MPI-IO instead of POSIX I/O
+                                 (default: off)
+     -n, --nblocks=<count>       count of blocks each process will read|write
+                                 (default: 32)
+     -N, --mapio                 use mmap instead of read|write
+                                 (default: off)
+     -o, --outfile=<filename>    output file name (or path)
+                                 (default: 'stdout')
+     -p, --pattern=<pattern>     'n1' (N-to-1 shared file) or 'nn' (N-to-N file per process)
+                                 (default: 'n1')
+     -P, --prdwr                 use pread|pwrite instead of read|write
+                                 (default: off)
+     -S, --stdio                 use fread|fwrite instead of read|write
+                                 (default: off)
+     -t, --pre-truncate=<size>   truncate file to size (B) before writing
+                                 (default: off)
+     -T, --post-truncate=<size>  truncate file to size (B) after writing
+                                 (default: off)
+     -U, --disable-unifyfs       do not use UnifyFS
+                                 (default: enable UnifyFS)
+     -v, --verbose               print verbose information
+                                 (default: off)
+     -V, --vecio                 use readv|writev instead of read|write
+                                 (default: off)
+     -x, --shuffle               read different data than written
+                                 (default: off)
 
 One form of running this example could be:
 
 .. code-block:: Bash
 
-    $ srun -N4 -n4 write-static -m /myMountPoint -f myTestFile
+    $ srun -N4 -n4 write-static -m /unifyfs -f myTestFile
+
+Producer-Consumer Workflow
+==========================
+
+UnifyFS can be used to support producer/consumer workflows where processes in a
+job perform loosely synchronized communication through files such as in coupled
+simulation/analytics workflows.
+
+The *write.c* and *read.c* example programs can be used as a basic test in
+running a producer-consumer workflow with UnifyFS.
+
+.. code-block:: Bash
+    :caption: All hosts in allocation
+
+    $ # start unifyfs
+    $
+    $ # write on all hosts
+    $ srun -N4 -n16 write-gotcha -f testfile
+    $
+    $ # read on all hosts
+    $ srun -N4 -n16 read-gotcha -f testfile
+    $
+    $ # stop unifyfs
+
+.. code-block:: Bash
+    :caption: Disjoint hosts in allocation
+
+    $ # start unifyfs
+    $
+    $ # write on half of hosts
+    $ srun -N2 -n8 --exclude=$hostlist_subset1 write-gotcha -f testfile
+    $
+    $ # read on other half of hosts
+    $ srun -N2 -n8 --exclude=$hostlist_subset2 read-gotcha -f testfile
+    $
+    $ # stop unifyfs
+
+.. note::
+    Producer/consumer support with UnifyFS has been tested using POSIX and
+    MPI-IO APIs on x86_64 (MVAPICH) and Power 9 systems (Spectrum MPI).
+
+    These scenarios have been tested using both the same and disjoint sets of
+    hosts as well as using a shared file and a file per process for I/O.
 
 .. explicit external hyperlink targets
 
