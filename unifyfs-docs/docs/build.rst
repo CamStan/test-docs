@@ -62,7 +62,6 @@ build is desired. Run ``spack info unifyfs`` for more info.
 
                ``unifyfs+hdf5 ^hdf5~mpi``     False    Build with serial HDF5
    Fortran     ``unifyfs+fortran``            False    Enable Fortran support
-   MDHIM       ``unifyfs+mdhim``              False    Enable MDHIM build options
    PMI         ``unifyfs+pmi``                False    Enable PMI2 support
    PMIx        ``unifyfs+pmix``               False    Enable PMIx support
    spath       ``unifyfs+spath``              True     Normalize relative paths
@@ -130,20 +129,22 @@ configure and build UnifyFS from its source code directory.
     $ spack load gotcha
     $ spack load argobots
     $ spack load mercury
-    $ spack load margo
+    $ spack load mochi-margo
     $ spack load spath
     $
+    $ gotcha_install=$(spack location -i gotcha)
+    $ spath_install=$(spack location -i spath)
+    $
     $ ./autogen.sh
-    $ ./configure --prefix=/path/to/install CPPFLAGS="-I${gotcha_install}/include -I{spath_install}/include" LDFLAGS="-L ${gotcha_install}/lib64 -L${spath_install}/lib64"
+    $ ./configure --prefix=/path/to/install --with-gotcha=${gotcha_install} --with-spath=${spath_install}
     $ make
     $ make install
 
-.. admonition:: Spack package install location
+Alternatively, UnifyFS can be configured using ``CPPFLAGS`` and ``LDFLAGS``:
 
-    The location where Spack installs any given package can be retrieved by
-    running ``spack location -i <package_name>.
+.. code-block:: Bash
 
-    E.g.: ``gotcha_install=$(spack location -i gotcha)
+    $ ./configure --prefix=/path/to/install CPPFLAGS="-I${gotcha_install}/include -I{spath_install}/include" LDFLAGS="-L${gotcha_install}/lib64 -L${spath_install}/lib64
 
 To see all available build configuration options, run ``./configure --help``
 after ``./autogen.sh`` has been run.
@@ -189,14 +190,27 @@ As an example, the commands may look like:
 
 .. code-block:: Bash
 
-    $ export PKG_CONFIG_PATH=path/to/install/lib/pkgconfig:path/to/install/lib64/pkgconfig
+    $ export PKG_CONFIG_PATH=$INSTALL_DIR/lib/pkgconfig:$INSTALL_DIR/lib64/pkgconfig:$PKG_CONFIG_PATH
+    $ export LD_LIBRARY_PATH=$INSTALL_DIR/lib:$INSTALL_DIR/lib64:$LD_LIBRARY_PATH
     $ ./autogen.sh
-    $ ./configure --prefix=/path/to/install CPPFLAGS=-I/path/to/install/include LDFLAGS=-L/path/to/install/lib
+    $ ./configure --prefix=/path/to/install CPPFLAGS=-I/path/to/install/include LDFLAGS="-L/path/to/install/lib -L/path/to/install/lib64"
     $ make
     $ make install
 
+Alternatively, UnifyFS can be configured using ``--with`` options:
+
+.. code-block:: Bash
+
+    $ ./configure --prefix=/path/to/install --with-gotcha=$INSTALL_DIR --with-spath=$INSTALL_DIR
+
 To see all available build configuration options, run ``./configure --help``
 after ``./autogen.sh`` has been run.
+
+
+.. note::
+
+    On Cray systems, the detection of MPI compiler wrappers requires passing the
+    following flags to the configure command: ``MPICC=cc MPIFC=ftn``
 
 ---------------------------
 
@@ -215,6 +229,10 @@ option to configure. Note that only GCC Fortran (i.e., gfortran) is known to
 work with UnifyFS. There is an open ifort_issue_ with the Intel Fortran compiler
 as well as an xlf_issue_ with the IBM Fortran compiler.
 
+.. note::
+
+    UnifyFS requires GOTCHA when Fortran support is enabled
+
 GOTCHA
 ******
 
@@ -223,6 +241,12 @@ available on all platforms. If GOTCHA is not available on your target system,
 you can omit it during UnifyFS configuration by using the ``--without-gotcha``
 configure option. Without GOTCHA, static linker wrapping is required for I/O
 interception, see :doc:`link`.
+
+.. warning::
+
+    UnifyFS requires GOTCHA for dynamic I/O interception of MPI-IO functions. If
+    UnifyFS is configured using ``--without-gotcha``, support will be lost for
+    MPI-IO (and as a result, HDF5) applications.
 
 HDF5
 ****
@@ -238,6 +262,15 @@ When available, UnifyFS uses the distributed key-value store capabilities
 provided by either PMI2 or PMIx. To enable this support, pass either
 the ``--enable-pmi`` or ``--enable-pmix`` option to configure. Without
 PMI support, a distributed file system accessible to all servers is required.
+
+SPATH
+******
+
+The spath library can be optionally used to normalize relative paths (e.g., ones
+containing ".", "..", and extra or trailing "/") and enable the support of using
+relative paths within an application. To enable, use the ``--with-spath``
+configure option or provide the appropriate ``CPPFLAGS`` and ``LDFLAGS`` at
+configure time.
 
 Transparent Mounting for MPI Applications
 *****************************************
