@@ -2,9 +2,9 @@
 VerifyIO: Determine UnifyFS Compatibility
 =========================================
 
------------------
-Recorder VerifyIO
------------------
+----------------------
+Recorder and  VerifyIO
+----------------------
 
 VerifyIO_ can be used to determine an application's compatability with UnifyFS
 as well as aid in narrowing down what an application may need to change to
@@ -15,7 +15,7 @@ application traces from Recorder and determines whether I/O synchronization is
 correct based on the underlying file system semantics (e.g., POSIX, commit) and
 synchronization semantics (e.g., POSIX, MPI).
 
-Run VerifyIO with commit semantics on the application in question to determine
+Run VerifyIO with commit semantics on the application's traces to determine
 compatibility with UnifyFS.
 
 ----------
@@ -37,9 +37,8 @@ Clone the ``pilgrim`` (default) branch of Recorder:
 
     $ git clone https://github.com/uiuc-hpc/Recorder.git
 
-If applicable, determine the install locations of the MPI-IO and HDF5 libraries
-being used by the application and pass those paths to Recorder at configure
-time.
+Determine the install locations of the MPI-IO and HDF5 libraries being used by
+the application and pass those paths to Recorder at configure time.
 
 .. code-block:: Bash
     :caption: Configure, Make, and Install
@@ -172,7 +171,7 @@ This format is printed at the top of the output.
 The final line printed contains a summary of all the potential conflicts.
 This consists of the total number of read-after-write (RAW) and
 write-after-write (WAW) potentially conflicting operations performed by
-different processes or the same process.
+different processes (D-#) or the same process (S-#).
 
 VerifyIO Results
 ^^^^^^^^^^^^^^^^
@@ -225,8 +224,8 @@ properly synchronized.
 
     Properly synchronized under posix semantics
 
-Incompatible [*]_ with UnifyFS
-""""""""""""""""""""""""""""""
+Incompatible with UnifyFS
+"""""""""""""""""""""""""
 
 In the event there are potential conflicts from different ranks but the proper
 synchronization has **not** occured, VerifyIO will report the application as not
@@ -268,11 +267,12 @@ The sequence IDs correspond to the order in which functions were called by that
 particular rank. In the recorder2text output, this ID will then correspond to
 line numbers, but off by +1 (i.e., seqID 169 -> line# 170).
 
-The format of the recorder2text output is ``start_time end_time function_name
-library_depth something (function_parameters)``
+The format of the recorder2text output is ``<start_time> <end_time>
+<function_name> <library_depth> <something> (function_parameters)``
 
 .. code-block:: none
     :caption: recorder2text output
+    :emphasize-lines: 6,14
 
         #rank 0
         ...

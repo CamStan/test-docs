@@ -18,9 +18,9 @@ for more detail.
 
 .. rubric:: File Locking
 
-UnifyFS currently does not support file locking (calls to ``fcntl()``). This
-results in some less obvious limitations when using some I/O libraries with
-UnifyFS (:ref:`see below <file-lock-label>`).
+UnifyFS does not support file locking (calls to ``fcntl()``). This results in
+some less obvious limitations when using some I/O libraries with UnifyFS
+(:ref:`see below <file-lock-label>`).
 
 .. warning::
 
@@ -132,8 +132,8 @@ syncs than necessary.
 File Locking
 ************
 
-UnifyFS not supporting file locks results in other I/O library features to not
-work with UnifyFS as well.
+UnifyFS not supporting file locks results in some I/O library features to not
+work with UnifyFS.
 
 .. topic:: Atomicity
 
@@ -163,12 +163,13 @@ work with UnifyFS as well.
 File Locking Workarounds
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Currently UnifyFS doesn't provide any direct workarounds for anything that
-requires file locking. Simply disable atomicity and data sieving and avoid using shared file pointers to get around this.
+UnifyFS doesn't provide any direct workarounds for anything that requires file
+locking. Simply disable atomicity and data sieving and avoid using shared file
+pointers to get around this.
 
 Once UnifyFS does provide support for file locking to be enabled, only do so in
-the case that the application won't run properly without locking. Enabling file
-lock support within UnifyFS will likely result in decreased performance by the
+the case that the application won't run properly without it. Enabling file lock
+support within UnifyFS will result in decreased I/O performance for the
 application.
 
 .. explicit external hyperlink targets
