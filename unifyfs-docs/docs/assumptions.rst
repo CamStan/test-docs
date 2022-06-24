@@ -58,10 +58,10 @@ modified by the application.
 These two consistency models provide opportunities for UnifyFS to
 provide better performance for the I/O operations of HPC applications.
 
+.. _commit_consistency_label:
 '''''''''''''''''''''''''''
 Commit Consistency Semantics in UnifyFS
 '''''''''''''''''''''''''''
-.. _commit_consistency_label:
 
 Commit consistency semantics require
 explicit "commit" operations to be performed before updates to a file

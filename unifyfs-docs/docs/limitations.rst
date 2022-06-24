@@ -64,8 +64,7 @@ forcing a data sync to the server after **every** write operation. Set
 ``UNIFYFS_CLIENT_WRITE_SYNC=ON`` to enable this option.
 
 **Cost:** Can cause a significant decrease in write performance as the amount of
-file sync operations that will be performed will likely be far more than
-necessary.
+file sync operations that are performed will be far more than necessary.
 
 Manually Add Sync Operations
 """"""""""""""""""""""""""""
@@ -86,13 +85,13 @@ the "sync-barrier-sync" construct needs to be used.
 .. Note::
 
     The "barrier" in "sync-barrier-sync" can be replaced by a send-recv or
-    certain collectives that are guaranteed to be synchronized. See the third
-    step in the `VerifyIO README`_ for more information.
+    certain collectives that are guaranteed to be synchronized. See the "Note on
+    the third step" in the `VerifyIO README`_ for more information.
 
-**Cost:** If this approach is even an option, the amount of time and effort
-required to track down all the places that the proper synchonization calls are
-needed can be very labor intensive. :doc:`VerifyIO <verifyio>` can help with in
-this effort.
+**Cost:** If making edits to the application source code is an option, the
+amount of time and effort required to track down all the places that proper
+synchonization calls are needed can be very labor intensive.
+:doc:`VerifyIO <verifyio>` can help with in this effort.
 
 HDF5 FILE_SYNC
 """"""""""""""
@@ -129,12 +128,11 @@ syncs than necessary.
 
 ----------
 
+.. _file-lock-label:
 File Locking
 ************
 
-.. _file-lock-label:
-
-UnifyFS not supporting file locking results in other I/O library features to not
+UnifyFS not supporting file locks results in other I/O library features to not
 work with UnifyFS as well.
 
 .. topic:: Atomicity
@@ -148,7 +146,7 @@ work with UnifyFS as well.
     It is recommended to disable data sieving when integrating with UnifyFS.
     Even with locking support, use of data sieving will drastically increase the
     time and space overhead within UnifyFS, significantly decreasing application
-    performance. For ROMIO, ret the hints ``romio_ds_write disable`` and
+    performance. For ROMIO, set the hints ``romio_ds_write disable`` and
     ``romio_ds_read disable`` to disable data sieving.
 
 .. topic:: Shared File Pointers
@@ -156,6 +154,7 @@ work with UnifyFS as well.
     Avoid using shared file pointers in MPI-I/O under UnifyFS as they require
     file locking to implement.
     Functions that use shared file pointers include:
+
     - ``MPI_File_write_shared()``
     - ``MPI_File_read_shared()``
     - ``MPI_File_write_ordered()``
@@ -164,13 +163,13 @@ work with UnifyFS as well.
 File Locking Workarounds
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Currently no direct workaround for anything that requires file locking. Simply
-disable atomicity and data sieving and avoid using shared file pointers to get
-around this.
+Currently UnifyFS doesn't provide any direct workarounds for anything that
+requires file locking. Simply disable atomicity and data sieving and avoid using shared file pointers to get around this.
 
-Once UnifyFS does provided support for file locking to be enabled, only do so in
+Once UnifyFS does provide support for file locking to be enabled, only do so in
 the case that the application won't run properly without locking. Enabling file
-lock support will likely result in decreased performance by the application.
+lock support within UnifyFS will likely result in decreased performance by the
+application.
 
 .. explicit external hyperlink targets
 

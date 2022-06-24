@@ -2,17 +2,17 @@
 VerifyIO: Determine UnifyFS Compatibility
 =========================================
 
---------
-VerifyIO
---------
+-----------------
+Recorder VerifyIO
+-----------------
 
 VerifyIO_ can be used to determine an application's compatability with UnifyFS
-as well as help narrow down what an application may need to change to become
-compatible with UnifyFS.
+as well as aid in narrowing down what an application may need to change to
+become compatible with UnifyFS.
 
-VerifyIO is a tool within the Recorder_ tracing framework that takes application
-traces from Recorder and determines whether I/O synchronization is correct based
-on the underlying file system semantics (e.g., POSIX, commit) and
+VerifyIO is a tool within the Recorder_ tracing framework that takes the
+application traces from Recorder and determines whether I/O synchronization is
+correct based on the underlying file system semantics (e.g., POSIX, commit) and
 synchronization semantics (e.g., POSIX, MPI).
 
 Run VerifyIO with commit semantics on the application in question to determine
@@ -25,20 +25,21 @@ VerifyIO Guide
 --------------
 
 To use VerifyIO, the Recorder library needs to be installed. See the `Recorder
-README`_ for full instructions on how to build and run Recorder.
+README`_ for full instructions on how to build, run, and use Recorder.
 
 Build
 *****
 
-Clone Recorder, using the ``pilgrim`` branch:
+Clone the ``pilgrim`` (default) branch of Recorder:
 
 .. code-block:: Bash
     :caption: Clone
 
     $ git clone https://github.com/uiuc-hpc/Recorder.git
 
-Determine the install locations of the MPI-IO and HDF5 libraries being used by
-the application and pass those paths to Recorder at configure time.
+If applicable, determine the install locations of the MPI-IO and HDF5 libraries
+being used by the application and pass those paths to Recorder at configure
+time.
 
 .. code-block:: Bash
     :caption: Configure, Make, and Install
@@ -80,8 +81,8 @@ as VerifyIO will flag this as incompatible under commit semantics.
     export ROMIO_PRINT_HINTS=1   #optional
 
 
-Run the application with Recorder to capture the traces using the equivalent
-``-env`` (mpirun) option for the available workload manager.
+Run the application with Recorder to capture the traces using the appropriate
+environment variable export option for the available workload manager.
 
 .. code-block:: Bash
     :caption: Capture Traces 
@@ -91,8 +92,8 @@ Run the application with Recorder to capture the traces using the equivalent
 Recorder places the trace files in a folder within the current working directory
 named ``hostname-username-appname-pid-starttime``.
 
-If desired (e.g., for debugging), generate human-readable traces from the
-captured trace files.
+If desired (e.g., for debugging), use the recorder2text tool to generate
+human-readable traces from the captured trace files.
 
 .. code-block:: Bash
     :caption: Generate Human-readable Traces 
@@ -170,8 +171,8 @@ This format is printed at the top of the output.
 
 The final line printed contains a summary of all the potential conflicts.
 This consists of the total number of read-after-write (RAW) and
-write-after-write (WAW) operations performed by different processes or the same
-process.
+write-after-write (WAW) potentially conflicting operations performed by
+different processes or the same process.
 
 VerifyIO Results
 ^^^^^^^^^^^^^^^^
@@ -184,8 +185,8 @@ Compatible with UnifyFS
 """""""""""""""""""""""
 
 In the event that there are no potential conflicts, or each potential conflict
-was performed by the same rank, VerifyIO will report the application as being
-properly synchronized and therefore compatible with UnifyFS.
+pair was performed by the same rank, VerifyIO will report the application as
+being properly synchronized and therefore compatible with UnifyFS.
 
 .. code-block:: none
 
@@ -221,16 +222,19 @@ properly synchronized.
     Nodes: 299, Edges: 685
     Conflicting I/O operations: 0-169-write <--> 3-245-read, properly synchronized: True
     Conflicting I/O operations: 0-169-write <--> 3-246-write, properly synchronized: True
-    Conflicting I/O operations: 0-169-write <--> 3-246-write, properly synchronized: True
 
     Properly synchronized under posix semantics
 
-Incompatible[*]_ with UnifyFS 
-"""""""""""""""""""""""""""""
+Incompatible [*]_ with UnifyFS
+""""""""""""""""""""""""""""""
 
 In the event there are potential conflicts from different ranks but the proper
 synchronization has **not** occured, VerifyIO will report the application as not
-being properly synchronized and therefore incompatible[*]_ with UnifyFS.
+being properly synchronized and therefore incompatible [*]_ with UnifyFS.
+
+Each operation involved in the conflicting pair is listed in the format
+``rank-sequenceID-operation`` followed by the whether that pair is properly
+synchronized.
 
 .. code-block:: none
 
@@ -243,7 +247,6 @@ being properly synchronized and therefore incompatible[*]_ with UnifyFS.
     Nodes: 299, Edges: 427
     0-169-write --> 3-245-read, properly synchronized: False
     0-169-write --> 3-246-write, properly synchronized: False
-    0-169-write --> 3-246-write, properly synchronized: False
 
     Not properly synchronized under mpi semantics
 
@@ -253,6 +256,47 @@ being properly synchronized and therefore incompatible[*]_ with UnifyFS.
    result (VerifyIO plans to have options to run under the assumption some
    workarounds are in place). Should your outcome be an incompatible result,
    please contact the UnifyFS `mailing list`_ for aid in finding a solution.
+
+.. rubric:: Debugging a Conflict
+
+The recorder2text ouput can be used to aid in narrowing down where/what is
+causing a conflicting pair. In the incompatible example above, the first pair is
+a ``write()`` from rank 0 with the sequence ID of 169 and a ``read()`` from rank
+3 with the sequence ID of 245.
+
+The sequence IDs correspond to the order in which functions were called by that
+particular rank. In the recorder2text output, this ID will then correspond to
+line numbers, but off by +1 (i.e., seqID 169 -> line# 170).
+
+The format of the recorder2text output is ``start_time end_time function_name
+library_depth something (function_parameters)``
+
+.. code-block:: none
+    :caption: recorder2text output
+
+        #rank 0
+        ...
+    167 0.1440291 0.1441011 MPI_File_write_at_all 1 1 ( 0-0 0 %p 1 MPI_TYPE_UNKNOWN [0_0] )
+    168 0.1440560 0.1440679 fcntl 2 0 ( /path/to/example_app_outfile 7 1 )
+    169 0.1440700 0.1440750 pread 2 0 ( /path/to/example_app_outfile %p 4888 18480 )
+    170 0.1440778 0.1440909 pwrite 2 0 ( /path/to/example_app_outfile %p 4888 18480 )
+    171 0.1440918 0.1440987 fcntl 2 0 ( /path/to/example_app_outfile 6 2 )
+        ...
+
+        #rank 3
+        ...
+    244 0.1539204 0.1627174 MPI_File_write_at_all 1 1 ( 0-0 0 %p 1 MPI_TYPE_UNKNOWN [0_0] )
+    245 0.1539554 0.1549513 fcntl 2 0 ( /path/to/example_app_outfile 7 1 )
+    246 0.1549534 0.1609544 pread 2 0 ( /path/to/example_app_outfile %p 14792 18848 )
+    247 0.1609572 0.1627053 pwrite 2 0 (/path/to/example_app_outfile %p 14792 18848 )
+    248 0.1627081 0.1627152 fcntl 2 0 ( /path/to/example_app_outfile 6 2 )
+        ...
+
+Note that in this example the ``pread()``/``pwrite()`` calls from rank 3 operate
+on overlapping bytes from the ``pwrite()`` call from rank 0. For this example,
+data sieving was left enabled which results in the ``fcntl()`` calls surrounding
+the other I/O operations. Refer to :doc:`limitations` for more on the file
+locking limitations of UnifyFS.
 
 .. explicit external hyperlink targets
 
