@@ -294,9 +294,9 @@ The format of the recorder2text output is ``<start_time> <end_time>
 
 Note that in this example the ``pread()``/``pwrite()`` calls from rank 3 operate
 on overlapping bytes from the ``pwrite()`` call from rank 0. For this example,
-data sieving was left enabled which results in the ``fcntl()`` calls surrounding
-the other I/O operations. Refer to :doc:`limitations` for more on the file
-locking limitations of UnifyFS.
+data sieving was left enabled which results in "fcntl-pread-pwrite-fcntl" I/O
+sequences. Refer to :doc:`limitations` for more on the file locking limitations
+of UnifyFS.
 
 .. explicit external hyperlink targets
 

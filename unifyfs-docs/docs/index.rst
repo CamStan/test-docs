@@ -20,15 +20,15 @@ UnifyFS: A file system for burst buffers
    link
    configuration
    run
-   library_api
 
 .. toctree::
    :maxdepth: 2
    :caption: Reference
 
    examples
-   verifyio
+   library_api
    dependencies
+   verifyio
 
 .. toctree::
    :maxdepth: 2

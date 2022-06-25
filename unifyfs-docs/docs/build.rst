@@ -58,9 +58,6 @@ build is desired. Run ``spack info unifyfs`` for more info.
                (``spack install <package>``)
    ==========  =============================  =======  ===========================
    Auto-mount  ``unifyfs+auto-mount``         True     Enable transparent mounting
-   HDF5        ``unifyfs+hdf5``               False    Build with parallel HDF5
-
-               ``unifyfs+hdf5 ^hdf5~mpi``     False    Build with serial HDF5
    Fortran     ``unifyfs+fortran``            False    Enable Fortran support
    PMI         ``unifyfs+pmi``                False    Enable PMI2 support
    PMIx        ``unifyfs+pmix``               False    Enable PMIx support
