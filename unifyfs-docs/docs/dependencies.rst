@@ -37,7 +37,7 @@ Optional
 ----------
 
 ===================
-UnifyFS Error Codes 
+UnifyFS Error Codes
 ===================
 
 Wherever sensible, UnifyFS uses the error codes defined in POSIX `errno.h
@@ -49,7 +49,7 @@ UnifyFS specific error codes are as follows:
     :widths: auto
 
     =====  =========  ======================================
-    Value  Error      Description 
+    Value  Error      Description
     =====  =========  ======================================
     1001   BADCONFIG  Configuration has invalid setting
     1002   GOTCHA     Gotcha operation error

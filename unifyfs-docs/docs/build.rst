@@ -19,6 +19,7 @@ One may install UnifyFS and its dependencies with Spack_.
 If you already have Spack, make sure you have the latest release.
 If you use a clone of the Spack develop branch, be sure to pull the latest changes.
 
+
 .. _build-label:
 
 Install Spack
@@ -33,6 +34,15 @@ Install Spack
 Use `Spack's shell support`_ to add Spack to your ``PATH`` and enable use of the
 ``spack`` command.
 
+.. admonition:: Thallium, Mochi Suite, and SDS Repo Users
+
+    The available and UnifyFS-compatible Mochi-Margo versions that are in the
+    ``mochi-margo`` Spack package do not match up with the latest/default
+    versions in the Mochi Suite, SDS Repo, and ``mochi-thallium`` Spack
+    packages. It is likely that a different version of ``mochi-margo`` will need
+    to be specified in the install command of UnifyFS. E.g.: ``spack install
+    unifyfs ^mochi-margo@0.9.6``
+
 Build UnifyFS and its dependencies
 **********************************
 
@@ -43,9 +53,6 @@ Build UnifyFS and its dependencies
 
 If the most recent changes on the development branch ('dev') of UnifyFS are
 desired, then do ``spack install unifyfs@develop``.
-
-.. Edit the following admonition if the default of variants are changed or when
-   new variants are added.
 
 Include or remove variants with Spack when installing UnifyFS when a custom
 build is desired. Run ``spack info unifyfs`` for more info.
@@ -98,7 +105,7 @@ the UnifyFS dependencies can then be installed.
 .. code-block:: Bash
 
     $ spack install gotcha
-    $ spack install mochi-margo ^libfabric fabrics=rxm,sockets,tcp
+    $ spack install mochi-margo@0.9.6 ^libfabric fabrics=rxm,sockets,tcp
     $ spack install spath~mpi
 
 .. tip::
