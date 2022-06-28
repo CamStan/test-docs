@@ -6,7 +6,7 @@ VerifyIO: Determine UnifyFS Compatibility
 Recorder and  VerifyIO
 ----------------------
 
-VerifyIO_ can be used to determine an application's compatability with UnifyFS
+VerifyIO_ can be used to determine an application's compatibility with UnifyFS
 as well as aid in narrowing down what an application may need to change to
 become compatible with UnifyFS.
 
@@ -59,7 +59,7 @@ Python3 and the ``recorder-viz`` and ``networkx`` packages are also required to
 run the final VerifyIO verification code.
 
 .. code-block:: Bash
-    :caption: Install Python Packages 
+    :caption: Install Python Packages
 
     $ module load python/3.x.x
     $
@@ -84,7 +84,7 @@ Run the application with Recorder to capture the traces using the appropriate
 environment variable export option for the available workload manager.
 
 .. code-block:: Bash
-    :caption: Capture Traces 
+    :caption: Capture Traces
 
     srun -N $nnodes -n $nprocs --export=ALL,LD_PRELOAD=$RECORDER_ROOT/lib/librecorder.so example_app_executable
 
@@ -95,7 +95,7 @@ If desired (e.g., for debugging), use the recorder2text tool to generate
 human-readable traces from the captured trace files.
 
 .. code-block:: Bash
-    :caption: Generate Human-readable Traces 
+    :caption: Generate Human-readable Traces
 
     $RECORDER_ROOT/bin/recorder2text /path/to/traces &> recorder2text.out
 
@@ -106,19 +106,19 @@ Next, run the Recorder conflict detector to capture **potential** conflicts. The
 file system. In the case of UnifyFS, use ``commit`` semantics.
 
 .. code-block:: Bash
-    :caption: Capture Potential Conflicts 
+    :caption: Capture Potential Conflicts
 
     $RECORDER_ROOT/bin/conflict_detector /path/to/traces --semantics=commit &> conflict_detector_commit.out
 
 The potential conflicts will be recorded to the file
-``path/to/traces/conflicts.txt``. 
+``path/to/traces/conflicts.txt``.
 
 Lastly, run VerifyIO with the traces and potential conflicts to determine
 whether all I/O operations are properly synchronized under the desired standard
 (e.g., POSIX, MPI).
 
 .. code-block:: Bash
-    :caption: Run VerifyIO 
+    :caption: Run VerifyIO
 
     # Evaluate using POSIX standard
     python3 $RECORDER_SRC/tools/verifyio/verifyio.py /path/to/traces /path/to/traces/conflicts.txt --semantics=posix &> verifyio_commit_results.posix
@@ -148,7 +148,7 @@ states as much:
 
 When potential conflicts exists, the conflict detector prints a list of each
 conflicting pair. For each operation within a pair, the output contains the
-process rank, sequence ID, offset the conflict occured at, number of bytes
+process rank, sequence ID, offset the conflict occurred at, number of bytes
 affected by the operation, and whether the operation was a write or a read.
 This format is printed at the top of the output.
 
@@ -180,7 +180,7 @@ VerifyIO takes the traces and potential conflicts and checks if each conflicting
 description on what determines proper synchronization for a conflicting I/O
 pair.
 
-Compatible with UnifyFS 
+Compatible with UnifyFS
 """""""""""""""""""""""
 
 In the event that there are no potential conflicts, or each potential conflict
@@ -207,7 +207,7 @@ being properly synchronized and therefore compatible with UnifyFS.
     Properly synchronized under mpi semantics
 
 When there are potential conflicts from different ranks but the proper
-synchronization has occured, VerifyIO will also report the application as being
+synchronization has occurred, VerifyIO will also report the application as being
 properly synchronized.
 
 .. code-block:: none
@@ -228,8 +228,8 @@ Incompatible with UnifyFS
 """""""""""""""""""""""""
 
 In the event there are potential conflicts from different ranks but the proper
-synchronization has **not** occured, VerifyIO will report the application as not
-being properly synchronized and therefore incompatible [*]_ with UnifyFS.
+synchronization has **not** occurred, VerifyIO will report the application as
+not being properly synchronized and therefore incompatible [*]_ with UnifyFS.
 
 Each operation involved in the conflicting pair is listed in the format
 ``rank-sequenceID-operation`` followed by the whether that pair is properly
@@ -258,7 +258,7 @@ synchronized.
 
 .. rubric:: Debugging a Conflict
 
-The recorder2text ouput can be used to aid in narrowing down where/what is
+The recorder2text output can be used to aid in narrowing down where/what is
 causing a conflicting pair. In the incompatible example above, the first pair is
 a ``write()`` from rank 0 with the sequence ID of 169 and a ``read()`` from rank
 3 with the sequence ID of 245.

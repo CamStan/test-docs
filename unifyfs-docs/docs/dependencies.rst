@@ -15,7 +15,7 @@ Required
   - `Argobots <https://github.com/pmodels/argobots/releases>`_ version 1.1 (or later)
   - `Mercury <https://github.com/mercury-hpc/mercury/releases>`_ version 2.0.1 (or later)
 
-    - `libfabric <https://github.com/ofiwg/libfabric>`_ or `bmi <https://github.com/radix-io/bmi/>`_
+    - `libfabric <https://github.com/ofiwg/libfabric>`_ (avoid verions 1.13 and 1.13.1) or `bmi <https://github.com/radix-io/bmi/>`_
 
   - `JSON-C <https://github.com/json-c/json-c>`_
 
