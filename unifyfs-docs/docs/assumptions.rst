@@ -17,6 +17,8 @@ The system requirements to run UnifyFS are:
     - The system must support the ability for UnifyFS user-level server processes
       to run concurrently with user application processes on compute nodes.
 
+----------
+
 --------------------
 Application Behavior
 --------------------
@@ -41,6 +43,8 @@ have to take additional steps to ensure correct execution of the application
 with UnifyFS.
 For more information on this topic, refer to the section on
 :ref:`commit consistency semantics in UnifyFS <commit_consistency_label>`.
+
+----------
 
 -----------------
 Consistency Model

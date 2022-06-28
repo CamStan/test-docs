@@ -84,7 +84,7 @@ variants.
 ----------
 
 -----------------------------------------------------------
-Build dependencies with Spack, Build UnifyFS with Autotools
+Build Dependencies with Spack, Build UnifyFS with Autotools
 -----------------------------------------------------------
 
 One can install the UnifyFS dependencies with Spack and build UnifyFS

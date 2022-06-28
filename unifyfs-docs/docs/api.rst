@@ -15,14 +15,13 @@ This section describes how to use the UnifyFS API in an application.
    include the ``+fortran`` variant, or configure UnifyFS with the
    ``--enable-fortran`` option if building manually.
 
-************************
-Transparent Mount Caveat
-************************
+.. rubric:: Transparent Mount Caveat
 
 MPI applications that take advantage of the :ref:`transparent mounting
 <auto-mount-label>` feature (through configuring with ``--enable-mpi-mount`` or
-with ``+auto-mount`` through Spack) do not need to be modified in any way to use
-UnifyFS. Move on to the :doc:`link` section next as this step can be skipped.
+with ``+auto-mount`` through Spack) do not need to be modified in any way in
+order to use UnifyFS. Move on to the :doc:`link` section next as this step can
+be skipped.
 
 -----
 
