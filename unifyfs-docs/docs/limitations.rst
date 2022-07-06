@@ -56,11 +56,11 @@ Synchronization Workarounds
 If your application does not adhere to proper syncronization requirements there
 are four workaround options available to still allow UnifyFS intregration.
 
-UnifyFS WRITE_SYNC
-""""""""""""""""""
+UnifyFS Sync-per-write Configuration (``client.write_sync``)
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 UnifyFS provided config option that makes UnifyFS act more “POSIX like” by
-forcing a data sync to the server after **every** write operation. Set
+forcing a metadata sync to the server after **every** write operation. Set
 ``UNIFYFS_CLIENT_WRITE_SYNC=ON`` to enable this option.
 
 **Cost:** Can cause a significant decrease in write performance as the amount of
@@ -97,7 +97,7 @@ HDF5 FILE_SYNC
 """"""""""""""
 
 HDF5 provided config option that forces HDF5 to add an ``MPI_File_sync()`` call
-after every collective write operation when needed by the underlying ROMIO
+after every collective write operation when needed by the underlying MPI-IO
 driver. Set ``HDF5_DO_MPI_FILE_SYNC=1`` to enable this option.
 
 **Cost:** Can cause a significant decrease in write performance as the amount of
@@ -167,10 +167,10 @@ UnifyFS doesn't provide any direct workarounds for anything that requires file
 locking. Simply disable atomicity and data sieving and avoid using shared file
 pointers to get around this.
 
-Once UnifyFS does provide support for file locking to be enabled, only do so in
-the case that the application won't run properly without it. Enabling file lock
-support within UnifyFS will result in decreased I/O performance for the
-application.
+In the future, UnifyFS may add support for file locking. However, it is strongly
+suggested to avoid file locking unless the application cannot run properly
+without its use. Enabling file lock support within UnifyFS will result in
+decreased I/O performance for the application.
 
 .. explicit external hyperlink targets
 
