@@ -102,7 +102,7 @@ human-readable traces from the captured trace files.
 This will generate text-format traces in the folder ``path/to/traces/_text``.
 
 Next, run the Recorder conflict detector to capture **potential** conflicts. The
-``--semantics=`` option needs to match the semantics provided by the underlying
+``--semantics=`` option needs to match the semantics of the intended underlying
 file system. In the case of UnifyFS, use ``commit`` semantics.
 
 .. code-block:: Bash
@@ -146,7 +146,7 @@ states as much:
     ...
     No potential conflict found for file /path/to/example_app_outfile
 
-When potential conflicts exists, the conflict detector prints a list of each
+When potential conflicts exist, the conflict detector prints a list of each
 conflicting pair. For each operation within a pair, the output contains the
 process rank, sequence ID, offset the conflict occurred at, number of bytes
 affected by the operation, and whether the operation was a write or a read.
