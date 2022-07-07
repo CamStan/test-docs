@@ -277,31 +277,24 @@ The format of the recorder2text output is ``<start-time> <end-time> <func-name>
     shows the Recorder-tracked function type.
 
     .. sidebar::
-        .. table::
-            :widths: auto
-            :caption: <func-type>
 
-            ===== ===============
-            Value Function Type
-            ===== ===============
-            0     RECORDER_POSIX
-            1     RECORDER_MPIIO
-            2     RECORDER_MPI
-            3     RECORDER_HDF5
-            4     RECORDER_FTRACE
-            ===== ===============
+        ===== ===============
+        Value Function Type
+        ===== ===============
+        0     RECORDER_POSIX
+        1     RECORDER_MPIIO
+        2     RECORDER_MPI
+        3     RECORDER_HDF5
+        4     RECORDER_FTRACE
+        ===== ===============
 
-    .. table::
-        :widths: auto
-        :caption: <call-level>
-
-        ===== ==========
-        Value Call Level
-        ===== ==========
-        0     Called by application directly
-        1     Called by HDF5 | Called by MPI (no HDF5)
-        2     Called by MPI, which was called by HDF5
-        ===== ==========
+    ===== ========================================
+    Value Call Level
+    ===== ========================================
+    0     Called by application directly
+    1     Called by HDF5 | Called by MPI (no HDF5)
+    2     Called by MPI, which was called by HDF5
+    ===== ========================================
 
 .. code-block:: none
     :caption: recorder2text output
