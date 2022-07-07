@@ -276,19 +276,19 @@ The format of the recorder2text output is ``<start-time> <end-time> <func-name>
     directly by the application or by an I/O library. The ``<func-type>`` value
     shows the Recorder-tracked function type.
 
-    +-------+------------------------------------------+-+-------+-----------------+
-    | Value | Call Level                               | | Value | Function Type   |
-    +=======+==========================================+=+=======+=================+
-    | 0     | Called by application directly           | | 0     | RECORDER_POSIX  |
-    +-------+------------------------------------------+-+-------+-----------------+
-    | 1     | Called by HDF5 | Called by MPI (no HDF5) | | 1     | RECORDER_MPIIO  |
-    +-------+------------------------------------------+-+-------+-----------------+
-    | 2     | Called by MPI, which was called by HDF5  | | 2     | RECORDER_MPI    |
-    +-------+------------------------------------------+-+-------+-----------------+
-    |       |                                          | | 3     | RECORDER_HDF5   |
-    +-------+------------------------------------------+-+-------+-----------------+
-    |       |                                          | | 4     | RECORDER_FTRACE |
-    +-------+------------------------------------------+-+-------+-----------------+
+    +-------+-----------------------------------------+-+-------+-----------------+
+    | Value | Call Level                              | | Value | Function Type   |
+    +=======+=========================================+ +=======+=================+
+    | 0     | Called by application directly          | | 0     | RECORDER_POSIX  |
+    +-------+-----------------------------------------+ +-------+-----------------+
+    | 1     | - Called by HDF5                        | | 1     | RECORDER_MPIIO  |
+    |       |                                         | +-------+-----------------+
+    |       | - Called by MPI (no HDF5)               | | 2     | RECORDER_MPI    |
+    +-------+-----------------------------------------+ +-------+-----------------+
+    | 2     | Called by MPI, which was called by HDF5 | | 3     | RECORDER_HDF5   |
+    +-------+-----------------------------------------+ +-------+-----------------+
+    |       |                                         | | 4     | RECORDER_FTRACE |
+    +-------+-----------------------------------------+-+-------+-----------------+
 
 .. code-block:: none
     :caption: recorder2text output
