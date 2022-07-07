@@ -50,6 +50,9 @@ that also imply a write/read. For example, ``MPI_File_set_size()`` and
 ``MPI_File_preallocate()`` act as write operations and ``MPI_File_get_size()``
 acts as a read operation. There may be other implied write/read calls as well.
 
+.. TODO: Mention use/need of ``romio_visibility_immediate`` hint once available.
+.. https://github.com/pmodels/mpich/issues/5902
+
 Synchronization Workarounds
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -99,6 +102,11 @@ HDF5 FILE_SYNC
 HDF5 provided config option that forces HDF5 to add an ``MPI_File_sync()`` call
 after every collective write operation when needed by the underlying MPI-IO
 driver. Set ``HDF5_DO_MPI_FILE_SYNC=1`` to enable this option.
+
+.. Note::
+
+    This option will soon be available in the `HDF5 develop branch`_ as well as
+    in the next HDF5 release.
 
 **Cost:** Can cause a significant decrease in write performance as the amount of
 file sync operations performed will likely be more than necessary. Similar to,
@@ -174,4 +182,5 @@ decreased I/O performance for the application.
 
 .. explicit external hyperlink targets
 
+.. _HDF5 develop branch: https://github.com/HDFGroup/hdf5
 .. _VerifyIO README: https://github.com/uiuc-hpc/Recorder/tree/pilgrim/tools/verifyio#note-on-the-third-step

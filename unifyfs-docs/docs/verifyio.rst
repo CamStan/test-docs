@@ -267,8 +267,41 @@ The sequence IDs correspond to the order in which functions were called by that
 particular rank. In the recorder2text output, this ID will then correspond to
 line numbers, but off by +1 (i.e., seqID 169 -> line# 170).
 
-The format of the recorder2text output is ``<start_time> <end_time>
-<function_name> <library_depth> <something> (function_parameters)``
+The format of the recorder2text output is ``<start-time> <end-time> <func-name>
+<call-level> <func-type> (func-parameters)``
+
+.. Note::
+
+    The ``<call-level>`` value indicates whether the function was called
+    directly by the application or by an I/O library. The ``<func-type>`` value
+    shows the Recorder-tracked function type.
+
+    .. sidebar::
+        .. table::
+            :widths: auto
+            :caption: <func-type>
+
+            ===== ===============
+            Value Function Type
+            ===== ===============
+            0     RECORDER_POSIX
+            1     RECORDER_MPIIO
+            2     RECORDER_MPI
+            3     RECORDER_HDF5
+            4     RECORDER_FTRACE
+            ===== ===============
+
+    .. table::
+        :widths: auto
+        :caption: <call-level>
+
+        ===== ==========
+        Value Call Level
+        ===== ==========
+        0     Called by application directly
+        1     Called by HDF5 | Called by MPI (no HDF5)
+        2     Called by MPI, which was called by HDF5
+        ===== ==========
 
 .. code-block:: none
     :caption: recorder2text output
