@@ -91,6 +91,7 @@ environment variable export option for the available workload manager.
 Recorder places the trace files in a folder within the current working directory
 named ``hostname-username-appname-pid-starttime``.
 
+.. _recorder2text-label:
 If desired (e.g., for debugging), use the recorder2text tool to generate
 human-readable traces from the captured trace files.
 
@@ -258,37 +259,14 @@ synchronized.
 
 .. rubric:: Debugging a Conflict
 
-The recorder2text output can be used to aid in narrowing down where/what is
-causing a conflicting pair. In the incompatible example above, the first pair is
-a ``write()`` from rank 0 with the sequence ID of 169 and a ``read()`` from rank
-3 with the sequence ID of 245.
+The :ref:`recorder2text output <recorder2text-label>` can be used to aid in
+narrowing down where/what is causing a conflicting pair. In the incompatible
+example above, the first pair is a ``write()`` from rank 0 with the sequence ID
+of 169 and a ``read()`` from rank 3 with the sequence ID of 245.
 
 The sequence IDs correspond to the order in which functions were called by that
 particular rank. In the recorder2text output, this ID will then correspond to
 line numbers, but off by +1 (i.e., seqID 169 -> line# 170).
-
-The format of the recorder2text output is ``<start-time> <end-time> <func-name>
-<call-level> <func-type> (func-parameters)``
-
-.. Note::
-
-    The ``<call-level>`` value indicates whether the function was called
-    directly by the application or by an I/O library. The ``<func-type>`` value
-    shows the Recorder-tracked function type.
-
-    +-------+------------------------------------+-+-------+-----------------+
-    | Value | Call Level                         | | Value | Function Type   |
-    +=======+====================================+=+=======+=================+
-    | 0     | Called by application directly     | | 0     | RECORDER_POSIX  |
-    +-------+------------------------------------+ +-------+-----------------+
-    | 1     | - Called by HDF5                   | | 1     | RECORDER_MPIIO  |
-    |       | - Called by MPI (no HDF5)          | +-------+-----------------+
-    |       |                                    | | 2     | RECORDER_MPI    |
-    +-------+------------------------------------+ +-------+-----------------+
-    | 2     | Called by MPI, which was called by | | 3     | RECORDER_HDF5   |
-    |       | HDF5                               | +-------+-----------------+
-    |       |                                    | | 4     | RECORDER_FTRACE |
-    +-------+------------------------------------+-+-------+-----------------+
 
 .. code-block:: none
     :caption: recorder2text output
@@ -317,6 +295,29 @@ on overlapping bytes from the ``pwrite()`` call from rank 0. For this example,
 data sieving was left enabled which results in "fcntl-pread-pwrite-fcntl" I/O
 sequences. Refer to :doc:`limitations` for more on the file locking limitations
 of UnifyFS.
+
+The format of the recorder2text output is: ``<start-time> <end-time>
+<func-name> <call-level> <func-type> (func-parameters)``
+
+.. Note::
+
+    The ``<call-level>`` value indicates whether the function was called
+    directly by the application or by an I/O library. The ``<func-type>`` value
+    shows the Recorder-tracked function type.
+
+    +-------+------------------------------------+-+-------+-----------------+
+    | Value | Call Level                         | | Value | Function Type   |
+    +=======+====================================+=+=======+=================+
+    | 0     | Called by application directly     | | 0     | RECORDER_POSIX  |
+    +-------+------------------------------------+ +-------+-----------------+
+    | 1     | - Called by HDF5                   | | 1     | RECORDER_MPIIO  |
+    |       | - Called by MPI (no HDF5)          | +-------+-----------------+
+    |       |                                    | | 2     | RECORDER_MPI    |
+    +-------+------------------------------------+ +-------+-----------------+
+    | 2     | Called by MPI, which was called by | | 3     | RECORDER_HDF5   |
+    |       | HDF5                               | +-------+-----------------+
+    |       |                                    | | 4     | RECORDER_FTRACE |
+    +-------+------------------------------------+-+-------+-----------------+
 
 .. explicit external hyperlink targets
 
