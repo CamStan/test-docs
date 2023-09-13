@@ -2,8 +2,10 @@
 Build UnifyFS
 =============
 
-This section describes how to build UnifyFS and its dependencies.
-There are three options:
+This section describes how to build UnifyFS and its dependencies, and what
+:ref:`configure time options <configure-options-label>` are available.
+
+There are three build options:
 
 * build both UnifyFS and dependencies with Spack,
 * build the dependencies with Spack, but build UnifyFS with autotools
@@ -22,13 +24,14 @@ If you use a clone of the Spack develop branch, be sure to pull the latest chang
 .. warning:: **Thallium, Mochi Suite, and SDS Repo Users**
 
     The available and UnifyFS-compatible Mochi-Margo versions that are in the
-    ``mochi-margo`` Spack package do not match up with the latest/default
+    ``mochi-margo`` Spack package may not match up with the latest/default
     versions in the Mochi Suite, SDS Repo, and ``mochi-thallium`` Spack
     packages. It is likely that a different version of ``mochi-margo`` will need
     to be specified in the install command of UnifyFS (E.g.: ``spack install
-    unifyfs ^mochi-margo@0.9.6``).
+    unifyfs ^mochi-margo@0.13.1``).
 
 .. _build-label:
+
 Install Spack
 *************
 
@@ -59,16 +62,18 @@ variants.
 .. table:: UnifyFS Build Variants
    :widths: auto
 
-   ==========  =============================  =======  ===========================
+   ==========  =============================  =======  =================================
       Variant  Command                        Default  Description
                (``spack install <package>``)
-   ==========  =============================  =======  ===========================
+   ==========  =============================  =======  =================================
    Auto-mount  ``unifyfs+auto-mount``         True     Enable transparent mounting
-   Fortran     ``unifyfs+fortran``            False    Enable Fortran support
+   Boostsys    ``unifyfs+boostsys``           False    Have Mercury use Boost
+   Fortran     ``unifyfs+fortran``            True     Enable Fortran support
    PMI         ``unifyfs+pmi``                False    Enable PMI2 support
    PMIx        ``unifyfs+pmix``               False    Enable PMIx support
-   spath       ``unifyfs+spath``              True     Normalize relative paths
-   ==========  =============================  =======  ===========================
+   Preload     ``unifyfs+preload``            False    Enable LD_PRELOAD library support
+   SPath       ``unifyfs+spath``              True     Normalize relative paths
+   ==========  =============================  =======  =================================
 
 .. attention::
 
@@ -104,7 +109,7 @@ the UnifyFS dependencies can then be installed.
 .. code-block:: Bash
 
     $ spack install gotcha
-    $ spack install mochi-margo@0.9.6 ^libfabric fabrics=rxm,sockets,tcp
+    $ spack install mochi-margo@0.13.1 ^libfabric fabrics=rxm,sockets,tcp
     $ spack install spath~mpi
 
 .. tip::
@@ -217,6 +222,7 @@ after ``./autogen.sh`` has been run.
 
 ----------
 
+.. _configure-options-label:
 -----------------
 Configure Options
 -----------------
@@ -276,6 +282,7 @@ configure option or provide the appropriate ``CPPFLAGS`` and ``LDFLAGS`` at
 configure time.
 
 .. _auto-mount-label:
+
 Transparent Mounting for MPI Applications
 *****************************************
 
@@ -285,6 +292,45 @@ mounting capability. With transparent mounting, calls to ``unifyfs_mount()`` and
 ``MPI_Finalize()``, respectively. Transparent mounting always uses ``/unifyfs`` as
 the namespace mountpoint. To enable transparent mounting, use the
 ``--enable-mpi-mount`` configure option.
+
+.. _preload-label:
+
+Intercepting I/O Calls from Shell Commands
+******************************************
+
+An optional preload library can be used to intercept I/O function calls
+made by shell commands, which allows one to run shell commands as a client
+to interact with UnifyFS.
+To build this library, use the ``--enable-preload`` configure option.
+At run time, one should start the UnifyFS server as normal.
+One must then set the ``LD_PRELOAD`` environment variable to point to
+the installed library location within the shell.
+For example, a bash user can set:
+
+.. code-block:: Bash
+
+    $ export LD_PRELOAD=/path/to/install/lib/libunifyfs_preload_gotcha.so
+
+One can then interact with UnifyFS through subsequent shell commands, such as:
+
+.. code-block:: Bash
+
+    $ touch /unifyfs/file1
+    $ cp -pr /unifyfs/file1 /unifyfs/file2
+    $ ls -l /unifyfs/file1
+    $ stat /unifyfs/file1
+    $ rm /unifyfs/file1
+
+The default mountpoint used is ``/unifyfs``.
+This can be changed by setting the ``UNIFYFS_PRELOAD_MOUNTPOINT``
+environment variable.
+
+.. note::
+
+    Due to the variety and variation of I/O functions that may be called by
+    different commands, there is no guarantee that a given invocation is
+    supported under UnifyFS semantics.
+    This feature is experimental, and it should be used at one's own risk.
 
 ---------------------------
 

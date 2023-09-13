@@ -17,6 +17,8 @@ Overall, the steps to run an application with UnifyFS include:
 
     5. Terminate the UnifyFS servers using ``unifyfs``
 
+----------
+
 -------------
 Start UnifyFS
 -------------
@@ -52,8 +54,8 @@ for further details on customizing the UnifyFS runtime configuration.
 
 .. _unifyfs_utility_label:
 
-``unifyfs`` provides command-line options to choose the client mountpoint,
-adjust the consistency model, and control stage-in and stage-out of files.
+``unifyfs`` provides command-line options to select the shared file system path,
+choose the client mountpoint, and control stage-in and stage-out of files.
 The full usage for ``unifyfs`` is as follows:
 
 .. code-block:: Bash
@@ -71,7 +73,6 @@ The full usage for ``unifyfs`` is as follows:
       -h, --help                print usage
 
     Command options for "start":
-      -C, --consistency=<model>  [OPTIONAL] consistency model (NONE | LAMINATED | POSIX)
       -e, --exe=<path>           [OPTIONAL] <path> where unifyfsd is installed
       -m, --mount=<path>         [OPTIONAL] mount UnifyFS at <path>
       -s, --script=<path>        [OPTIONAL] <path> to custom launch script
@@ -79,10 +80,12 @@ The full usage for ``unifyfs`` is as follows:
       -S, --share-dir=<path>     [REQUIRED] shared file system <path> for use by servers
       -c, --cleanup              [OPTIONAL] clean up the UnifyFS storage upon server exit
       -i, --stage-in=<manifest>  [OPTIONAL] stage in file(s) listed in <manifest> file
+      -P, --stage-parallel       [OPTIONAL] use parallel stage-in
       -T, --stage-timeout=<sec>  [OPTIONAL] timeout for stage-in operation
 
     Command options for "terminate":
       -o, --stage-out=<manifest> [OPTIONAL] stage out file(s) listed in <manifest> on termination
+      -P, --stage-parallel       [OPTIONAL] use parallel stage-out
       -T, --stage-timeout=<sec>  [OPTIONAL] timeout for stage-out operation
       -s, --script=<path>        [OPTIONAL] <path> to custom termination script
       -S, --share-dir=<path>     [REQUIRED for --stage-out] shared file system <path> for use by servers
@@ -94,6 +97,8 @@ Only applications that explicitly call ``unifyfs_mount()`` and access files
 under the specified mountpoint prefix will utilize UnifyFS for their I/O. All
 other applications will operate unchanged.
 
+----------
+
 ------------
 Stop UnifyFS
 ------------
@@ -102,6 +107,8 @@ After all UnifyFS-enabled applications have completed running, use
 ``unifyfs terminate`` to terminate the servers. Pass the ``--cleanup`` option to
 ``unifyfs start`` to have the servers remove temporary data locally stored on
 each node after termination.
+
+----------
 
 --------------------------------
 Resource Manager Job Integration
@@ -120,9 +127,11 @@ within the source repository at ``util/scripts/lsfcsm``.
 
 Support for the SLURM resource manager is under development.
 
------------------------------------------
+----------
+
+---------------------------------------
 Transferring Data In and Out of UnifyFS
------------------------------------------
+---------------------------------------
 
 Data can be transferred in/out of UnifyFS during server startup and termination,
 or at any point during a job using two stand-alone applications.
@@ -252,4 +261,26 @@ Examples:
     :caption: Parallel Transfer using 8 Clients (up to 8 concurrent file transfers)
 
     $ srun -N 4 -n 8 unifyfs-stage --parallel $MY_MANIFEST_FILE
+
+----------
+
+---------------------
+UnifyFS LS Executable
+---------------------
+
+The ``unifyfs-ls`` program is installed in the same directory as the
+``unifyfs`` utility (i.e., ``$UNIFYFS_INSTALL/bin``).  This tool will provide
+information about any files the *local* server process knows about.  Users
+may find this helpful when debugging their applications and want to know if
+the files they think are being managed by UnifyFS really are.
+
+.. code-block:: Bash
+
+    [prompt]$ unifyfs-ls --help
+    Usage:
+      unifyfs-ls [ -v | --verbose ] [ -m <dir_name> | --mount_point_dir=<dir_name> ]
+
+      -v | --verbose: show verbose information(default: 0)
+      -m | --mount_point: the location where unifyfs is mounted (default: /unifyfs)
+
 

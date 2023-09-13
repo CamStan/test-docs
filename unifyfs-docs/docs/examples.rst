@@ -7,6 +7,8 @@ build into static, GOTCHA, and pure POSIX (not linked with UnifyFS) versions
 depending on how they are linked. Several of the example programs are also used
 in the UnifyFS :doc:`intregraton testing <testing>`.
 
+----------
+
 Locations of Examples
 =====================
 
@@ -17,7 +19,7 @@ Install Location
 ----------------
 
 Upon installation of UnifyFS, the example programs are installed into the
-*install/libexec* folder.
+``<install_prefix_dir>/libexec`` directory.
 
 Installed with Spack
 ^^^^^^^^^^^^^^^^^^^^
@@ -36,7 +38,7 @@ Installed with Autotools
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 The autotools installation of UnifyFS will place the example programs in the
-*libexec/* directory of the path provided to ``--prefix=/path/to/install`` during
+``libexec`` subdirectory of the path provided to ``--prefix=/path/to/install`` during
 the configure step of :doc:`building and installing <build>`.
 
 Build Location
@@ -51,14 +53,14 @@ location can be found with the command ``spack location unifyfs``.
 
 To navigate to the location of the static and POSIX examples, do:
 
-.. code-block:: Bash
+.. code-block:: bash
 
     $ spack install --keep-stage unifyfs
     $ spack cd unifyfs
     $ cd spack-build/examples/src
 
 The GOTCHA examples are one directory deeper in
-*spack-build/examples/src/.libs*.
+``spack-build/examples/src/.libs``.
 
 .. note::
 
@@ -72,8 +74,27 @@ Built with Autotools
 ^^^^^^^^^^^^^^^^^^^^
 
 The autotools build of UnifyFS will place the static and POSIX example programs
-in the *examples/src* directory and the GOTCHA example programs in the
-*examples/src/.libs* directory of your build directory.
+in the ``examples/src`` directory and the GOTCHA example programs in the
+``examples/src/.libs`` directory of your build directory.
+
+
+Manual Build from Installed UnifyFS
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+On some systems, particularly those using compiler wrappers (e.g., HPE/Cray
+systems), the autotools build of the example programs will fail due to a
+longstanding issue with the way that ``libtool`` reorders compiler and
+linker flags. A Makefile suitable for manually building the examples from a
+previously installed version of UnifyFS is available at
+``examples/src/Makefile.examples``. This Makefile also serves as a good
+reference for how to use the UnifyFS ``pkg-config`` support to build and link
+client programs. The following commands will build the example programs
+using this Makefile.
+
+.. code-block:: bash
+
+    $ cd <source_dir>/examples/src
+    $ make -f Makefile.examples
 
 ------------
 
@@ -154,6 +175,8 @@ One form of running this example could be:
 .. code-block:: Bash
 
     $ srun -N4 -n4 write-static -m /unifyfs -f myTestFile
+
+----------
 
 Producer-Consumer Workflow
 ==========================
