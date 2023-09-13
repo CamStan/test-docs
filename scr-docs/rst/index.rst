@@ -12,29 +12,39 @@ for checkpointing, restarting, and writing large datasets.
 With SCR, jobs run more efficiently, recompute less work upon a failure,
 and reduce load on shared resources like the parallel file system.
 It provides the most benefit to large-scale jobs that write large datasets.
-SCR utilizes tiered storage in a cluster to provide applications
-with the following capabilities:
+Check out our video_ on how SCR works for more information.
 
+.. _video: https://youtu.be/_r6svl_eAns
+
+SCR provides the following capabilities:
+
+* scalable checkpoint, restart, and output bandwidth,
+* asynchronous data transfers to the parallel file system,
 * guidance for the optimal checkpoint frequency,
-* scalable checkpoint bandwidth,
-* scalable restart bandwidth,
-* scalable output bandwidth,
-* asynchronous data transfers to the parallel file system.
+* automated tracking and restart from the most recent checkpoint,
+* automated job relaunch within an allocation after hangs or failures.
+
+SCR provides API bindings for C/C++, Fortran, and Python applications.
 
 SCR originated as a production-level implementation of a multi-level checkpoint system
 of the type analyzed by [Vaidya]_
 SCR caches checkpoints in scalable storage,
 which is faster but less reliable than the parallel file system.
 It applies a redundancy scheme to the cache such that checkpoints can be recovered after common system failures.
-It also copies a subset of checkpoints to the parallel file system to recover from less common but more severe failures.
-In many failure cases, a job can be restarted from a checkpoint in cache,
-and writing and reading datasets in cache can be orders of magnitude faster than the parallel file system.
+It copies a subset of checkpoints to the parallel file system to recover from less common but more severe failures.
+In many failure cases, a job can be restarted from a cached checkpoint.
+Reading and writing datasets to cache can be orders of magnitude faster than the parallel file system
+as shown in the figure below.
 
 .. _fig-aggr_bw:
 
-.. figure:: users/fig/aggr_bw.png
+.. figure:: users/fig/scr_lassen.png
 
-   Aggregate write bandwidth on Coastal
+   Aggregate write bandwidth with SCR on the Lassen system at LLNL.
+   Each test runs with 40 processes per node,
+   where each process writes a 1GB file and calls fsync.
+   The RAM and SSD plots show the effective bandwidth achieved when
+   writing to node-local storage and applying a given SCR redundancy scheme.
 
 When writing a cached dataset to the parallel file system, SCR can transfer data asynchronously.
 The application may continue once the data has been written to the cache
@@ -48,13 +58,15 @@ The SCR commands are typically invoked from the job batch script.
 They are used to prepare the cache before a job starts,
 automate the process of restarting a job,
 and copy datasets from cache to the parallel file system upon a failure.
+Though one gains the most benefit when using both,
+one may use the SCR library without the SCR commands.
 
 .. [Vaidya] "A Case for Two-Level Recovery Schemes", Nitin H. Vaidya, IEEE Transactions on Computers, 1998, http://doi.ieeecomputersociety.org/10.1109/12.689645.
 
 .. _sec-contact:
 
-Support
-=======
+Support and Additional Information
+==================================
 
 The main repository for SCR is located at:
 
@@ -63,14 +75,17 @@ https://github.com/LLNL/scr.
 From this site, you can download the source code and manuals for
 the current release of SCR.
 
-For information about the project including active research efforts, please visit:
+For more information about the project including active research efforts, please visit:
 
-https://computation.llnl.gov/project/scr
+* https://computing.llnl.gov/projects/scalable-checkpoint-restart-for-mpi
+* https://insidehpc.com/2019/12/podcast-scr-scalable-checkpoint-restart-paves-the-way-for-exascale/
+* https://www.youtube.com/watch?v=qt2VgIZaoNA
+* https://youtu.be/_r6svl_eAns
 
 To contact the developers of SCR for help with using or porting SCR,
 please visit:
 
-https://computation.llnl.gov/project/scr/contact.php
+https://computing.llnl.gov/projects/scalable-checkpoint-restart-for-mpi/contact
 
 There you will find links to join our discussion mailing list for help
 topics, and our announcement list for getting notifications of new
@@ -88,7 +103,12 @@ Contents
    users/build.rst
    users/api.rst
    users/integration.rst
-   users/run.rst
    users/config.rst
+   users/run.rst
    users/halt.rst
    users/manage.rst
+
+.. toctree::
+   :hidden:
+
+   users/directories_example.rst

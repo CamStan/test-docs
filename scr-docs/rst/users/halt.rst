@@ -5,8 +5,12 @@
 Halt a job
 ==========
 
-There are several mechanisms to instruct a running SCR application to halt.
-It is often necessary to interact with the resource manager to halt a job.
+When SCR is configured to write datasets to cache,
+one needs to take care when terminating a job early
+so that SCR can copy datasets from cache to the
+parallel file system before the job allocation ends.
+This section describes methods to cleanly halt a job,
+including detection and termination of a hanging job.
 
 scr_halt and the halt file
 --------------------------
@@ -19,11 +23,13 @@ A number of different halt conditions can be specified.
 In most cases, the :code:`scr_halt` command communicates these conditions to the running
 application via the :code:`halt.scr` file,
 which is stored in the hidden :code:`.scr` directory within the prefix directory.
-The SCR library reads the halt file when the application calls :code:`SCR_Init`
-and each time the application completes a checkpoint.
+The application can determine when to exit by calling :code:`SCR_Should_exit`.
+
+Additionally, one can set :code:`SCR_HALT_EXIT=1` to configure SCR to exit the job
+if it detects an active halt condition.
+In that case, the SCR library reads the halt file when the application calls :code:`SCR_Init`
+and during :code:`SCR_Complete_output` after each complete checkpoint.
 If a halt condition is satisfied, all tasks in the application call :code:`exit`.
-One can disable this behavior by setting the :code:`SCR_HALT_ENABLED` parameter to 0.
-In this case, the application can determine when to exit by calling :code:`SCR_Should_exit`.
 
 Halt after next checkpoint
 --------------------------
@@ -57,7 +63,7 @@ For example, you can instruct a job to halt after "12:00pm today" via::
 
   scr_halt --after '12:00pm today'
 
-It is also possible to instruct a job to halt before* a specified time
+It is also possible to instruct a job to halt *before* a specified time
 using the :code:`--before` option.
 For example, you can instruct a job to halt before "8:30am tomorrow" via::
 
@@ -121,7 +127,7 @@ For example, if the job id is 1234 and the step id is 5, then use the following 
   scr_halt
   scancel 1234.5
 
-Do *not* just type ":code:`scancel 1234`" -- be sure to include the job step id.
+Do *not* just type :code:`scancel 1234` -- be sure to include the job step id.
 
 For ALPS, use :code:`apstat` to get the apid of the job step to kill.
 Then, follow the steps as described above: execute :code:`scr_halt`
@@ -150,7 +156,7 @@ time between checkpoints as specified by the user. If the time between checkpoin
 is longer than expected, SCR assumes the job is hanging.
 Two SCR parameters determine how many seconds should pass
 between I/O phases in an application, i.e. seconds between
-consecutive calls to :code:`SCR_Start_checkpoint`.
+consecutive calls to :code:`SCR_Start_output`.
 These are :code:`SCR_WATCHDOG_TIMEOUT`
 and :code:`SCR_WATCHDOG_TIMEOUT_PFS`. The first parameter
 specifies the time to wait when SCR writes checkpoints to
@@ -161,13 +167,10 @@ The reason for the two timeouts is that writing to the parallel
 file system generally takes much longer than writing to in-system
 storage, and so a longer timeout period is useful in that case.
 
-
 When using this feature, be careful to check that the job does not hang near the end of its allocation time limit,
 since in this case, SCR may not kill the run with enough time before the allocation ends.
 If you suspect the job to be hanging and you deem that SCR will not
 kill the run in sufficient time, manually cancel the run as described above.
-
-
 
 Combine, list, change, and unset halt conditions
 ------------------------------------------------
