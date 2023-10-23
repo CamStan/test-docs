@@ -26,7 +26,7 @@ build:
 
 # Build documentation in the docs/ directory with Sphinx
 sphinx:
-    configuration: unifyfs-docs/conf.py
+  configuration: unifyfs-docs/conf.py
   fail_on_warning: true
 
 # We recommend specifying your dependencies to enable reproducible builds:
