@@ -14,18 +14,19 @@ build:
   os: ubuntu-22.04
   tools:
     python: "3.11"
-  jobs:
-    post_checkout:
-      # Cancel building pull requests when there aren't changed in the docs directory or YAML file.
-      - |
-        if [ "$READTHEDOCS_VERSION_TYPE" = "external" ] && git diff --quiet origin/dev -- docs/ .readthedocs.yaml;
-        then
-          exit 183;
-        fi
+  # disabled in test-docs repo
+  #jobs:
+  #  post_checkout:
+  #    # Cancel building pull requests when there aren't changed in the docs directory or YAML file.
+  #    - |
+  #      if [ "$READTHEDOCS_VERSION_TYPE" = "external" ] && git diff --quiet origin/dev -- unifyfs-docs/ .readthedocs.yaml;
+  #      then
+  #        exit 183;
+  #      fi
 
 # Build documentation in the docs/ directory with Sphinx
 sphinx:
-  configuration: docs/conf.py
+    configuration: unifyfs-docs/conf.py
   fail_on_warning: true
 
 # We recommend specifying your dependencies to enable reproducible builds:

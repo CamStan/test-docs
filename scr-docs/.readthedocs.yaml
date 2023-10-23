@@ -17,11 +17,11 @@ build:
 
 # Build user documentation in the doc/ directory with Sphinx
 sphinx:
-  configuration: doc/rst/conf.py
+  configuration: scr-docs/rst/conf.py
   #fail_on_warning: true
 
 # We recommend specifying your dependencies to enable reproducible builds:
 # https://docs.readthedocs.io/en/stable/guides/reproducible-builds.html
 python:
   install:
-  - requirements: doc/requirements.txt
+  - requirements: scr-docs/requirements.txt
