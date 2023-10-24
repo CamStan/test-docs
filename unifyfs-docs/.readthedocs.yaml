@@ -16,6 +16,7 @@ build:
     python: "3.11"
   jobs:
     pre_install:
+      - python -m pip install pip-tools
       - pip-compile -o unifyfs-docs/requirements.txt unifyfs-docs/requirements.in
     post_install:
       - cat unifyfs-docs/requirements.txt
