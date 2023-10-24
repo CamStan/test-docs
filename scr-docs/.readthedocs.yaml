@@ -28,7 +28,7 @@ build:
       # https://docs.readthedocs.io/en/stable/guides/reproducible-builds.html#pin-your-transitive-dependencies
     pre_install:
       - python -m pip install pip-tools
-      - pip-compile --upgrade --strip-extras -o scr-docs/new_requirements.txt scr-docs/requirements.in
+      - pip-compile --strip-extras -o scr-docs/new_requirements.txt scr-docs/requirements.in --upgrade
 
 # Build user documentation in the doc/ directory with Sphinx
 sphinx:
