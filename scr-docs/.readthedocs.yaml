@@ -17,9 +17,7 @@ build:
   jobs:
     pre_install:
       - python -m pip install pip-tools
-      - pip-compile -o scr-docs/requirements.txt scr-docs/requirements.in
-    post_install:
-      - cat scr-docs/requirements.txt
+      - pip-compile --strip-extras -o scr-docs/new_requirements.txt scr-docs/requirements.in
 
 # Build user documentation in the doc/ directory with Sphinx
 sphinx:
@@ -28,6 +26,6 @@ sphinx:
 
 # We recommend specifying your dependencies to enable reproducible builds:
 # https://docs.readthedocs.io/en/stable/guides/reproducible-builds.html
-#python:
-#  install:
-#  - requirements: scr-docs/requirements.txt
+python:
+  install:
+  - requirements: scr-docs/requirements.txt
