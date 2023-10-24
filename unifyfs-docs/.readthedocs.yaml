@@ -16,6 +16,17 @@ build:
     python: "3.12"
   jobs:
     pre_install:
+      # pip-compile was used to generate the requirements.txt file to enable
+      # reproducible builds.
+      #
+      # If adding or updating top-level dependencies, update requirements.in and
+      # then overwrite existing requirements.txt with results of `pip-compile`.
+      #
+      # If simply wanting to update transitive dependencies to pin a new
+      # reproducible build, then overwrite existing requirements.txt with
+      # results of `pip-compile`.
+      #
+      # https://docs.readthedocs.io/en/stable/guides/reproducible-builds.html#pin-your-transitive-dependencies
       - python -m pip install pip-tools
       - pip-compile --strip-extras -o unifyfs-docs/new_requirements.txt unifyfs-docs/requirements.in
   # disabled in test-docs repo
@@ -36,4 +47,6 @@ sphinx:
 # https://docs.readthedocs.io/en/stable/guides/reproducible-builds.html
 python:
   install:
+  # If needing to update for pinning a new reproducible build, then overwrite with
+  # results of `pip-compile` command above.
   - requirements: unifyfs-docs/requirements.txt

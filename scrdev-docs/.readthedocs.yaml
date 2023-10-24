@@ -22,8 +22,7 @@ sphinx:
 
 # We recommend specifying your dependencies to enable reproducible builds:
 # https://docs.readthedocs.io/en/stable/guides/reproducible-builds.html
-#
-# Using same requirements file as scr-docs
 python:
   install:
+  # Using same requirements file as scr-docs.
   - requirements: scr-docs/requirements.txt
