@@ -24,6 +24,6 @@ sphinx:
 # https://docs.readthedocs.io/en/stable/guides/reproducible-builds.html
 #
 # Using same requirements file as scr-docs
- python:
-   install:
-   - requirements: scr-docs/requirements.txt
+python:
+  install:
+  - requirements: scr-docs/requirements.txt
