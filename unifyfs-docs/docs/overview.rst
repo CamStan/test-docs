@@ -99,7 +99,7 @@ pre-1.0 beta version.
 .. image:: images/UnifyFS-tutorial-May2022.png
    :target: slides/UnifyFS-tutorial-May2022.pdf
    :height: 72px
-   :aligh: left
+   :align: left
    :alt: UnifyFS Tutorial Slides - May 2022
 
 :download: `Download PDF <slides/UnifyFS-tutorial-May2022.pdf>`.
