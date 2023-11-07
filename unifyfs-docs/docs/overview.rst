@@ -74,7 +74,7 @@ UnifyFS Videos
 Quickstart
 **********
 
-Text here
+Quick overview on what UnifyFS is and how to use it.
 
 .. raw:: html
 
@@ -82,14 +82,11 @@ Text here
         <iframe width="560" height="315" src="https://www.youtube.com/embed/A_6lG_4EE2M?si=GCcwE3M68fsYUmO_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     </div>
 
-Text here
-
-.. <iframe src="https://youtu.be/A_6lG_4EE2M?si=GCcwE3M68fsYUmO_" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
-
 Tutorial
 ********
 
-Text here
+More in-depth recording of the problems UnifyFS solves and a how-to using a
+pre-1.0 beta version.
 
 .. raw:: html
 
@@ -97,6 +94,24 @@ Text here
         <iframe width="560" height="315" src="https://www.youtube.com/embed/FmQVJplyVdw?si=_V7f-m_5eOLe90eT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     </div>
 
-Text here
+.. rubric:: UnifyFS Tutorial Slides - May 2022
 
-.. <iframe src="https://youtu.be/A_6lG_4EE2M?si=GCcwE3M68fsYUmO_" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+.. image:: images/UnifyFS-tutorial-May2022.png
+   :target: slides/UnifyFS-tutorial-May2022.pdf
+   :height: 72px
+   :aligh: left
+   :alt: UnifyFS Tutorial Slides - May 2022
+
+:download: `Download PDF <slides/UnifyFS-tutorial-May2022.pdf>`.
+
+|
+
+.. rubric:: May 2022 Tutorial Corrections:
+
+- Video 30:04 | Slide 19 - Variants ``boostsys`` and ``preload`` have since been
+  added.
+- Video 31:08 | Slide 22 - OpenSSL is also a dependency that was missed on this slide.
+- Video 41:10 | Slide 48 - User Guide url starts with *https*, not *http*.
+
+For full changes since the pre-1.0 beta version of UnifyFS used in the May 2022
+tutorial, see the `UnifyFS release notes <https://github.com/LLNL/UnifyFS/releases>`_.
